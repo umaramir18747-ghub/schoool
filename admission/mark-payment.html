@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>MEI – Mark Payment</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="fee.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+    <div class="app-container">
+      <main class="main-panel">
+        <div class="page-header">
+          <h1><i class="fas fa-money-bill-wave"></i> Mark Payment</h1>
+          <p>Mark student fees as paid. Paid records will be moved to View Details.</p>
+        </div>
+        <div class="data-card">
+          <div class="card-header">
+            <h2><i class="fas fa-users"></i> Pending Fee Records <span class="badge-count" id="feeCountBadge">0</span></h2>
+          </div>
+          <div class="filters-row">
+            <div class="search-wrap">
+              <i class="fas fa-search"></i>
+              <input type="text" class="search-input" id="searchInput" placeholder="Search by name, reg no, fee type…" oninput="applyFilters()">
+            </div>
+            <select class="filter-select" id="classFilter" onchange="applyFilters()">
+              <option value="">All Classes</option>
+            </select>
+            <select class="filter-select" id="feeTypeFilter" onchange="applyFilters()">
+              <option value="">All Fee Types</option>
+            </select>
+            <select class="filter-select" id="feeMonthFilter" onchange="applyFilters()">
+              <option value="">All Fee Months</option>
+            </select>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Reg No.</th>
+                  <th>Student Name</th>
+                  <th>Class Name</th>
+                  <th>Fee Type</th>
+                  <th>Fee Month</th>
+                  <th>Due Date</th>
+                  <th>Amount (PKR)</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="feeTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+<script src="../components.js"></script>
+<script>
+  function loadComponents() {
+    fetch('header.html').then(r => r.text()).then(data => document.getElementById('header-placeholder').innerHTML = data);
+    fetch('sidebar.html').then(r => r.text()).then(data => document.getElementById('sidebar-placeholder').innerHTML = data);
+  }
+
+  window.onload = function() {
+    loadComponents();
+    setTimeout(() => { if (typeof window.initHeaderAndSidebar === 'function') window.initHeaderAndSidebar(); }, 400);
+    buildFilters();
+    renderFeeTable();
+  };
+
+  function loadFeeRecords() {
+    const stored = localStorage.getItem('messFeeRecords');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  function saveFeeRecords(records) {
+    localStorage.setItem('messFeeRecords', JSON.stringify(records));
+  }
+
+  let feeRecords = loadFeeRecords();
+
+  function generateReceiptNumber() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const existing = feeRecords.map(r => r.receiptNo).filter(Boolean);
+    let result = "";
+    do {
+      result = "";
+      const length = Math.floor(Math.random() * 3) + 8;
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+    } while (existing.includes(result));
+    return result;
+  }
+
+  function formatDueDate(dateStr) {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-PK', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function buildFilters() {
+    const records = loadFeeRecords();
+    
+    // Build Class Filter
+    const classes = [...new Set(records.map(r => r.className))].sort();
+    const classSel = document.getElementById('classFilter');
+    classSel.innerHTML = '<option value="">All Classes</option>' +
+      classes.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    // Build Fee Type Filter
+    const feeTypes = [...new Set(records.map(r => r.feeType))].sort();
+    const feeTypeSel = document.getElementById('feeTypeFilter');
+    feeTypeSel.innerHTML = '<option value="">All Fee Types</option>' +
+      feeTypes.map(f => `<option value="${f}">${f}</option>`).join('');
+
+    // Build Fee Month Filter
+    const feeMonths = [...new Set(records.map(r => r.feeMonth))].sort();
+    const feeMonthSel = document.getElementById('feeMonthFilter');
+    feeMonthSel.innerHTML = '<option value="">All Fee Months</option>' +
+      feeMonths.map(m => `<option value="${m}">${m}</option>`).join('');
+  }
+
+  function applyFilters() {
+    renderFeeTable();
+  }
+
+  function getFilteredRecords() {
+    const search = document.getElementById('searchInput').value.toLowerCase().trim();
+    const classVal = document.getElementById('classFilter').value;
+    const feeTypeVal = document.getElementById('feeTypeFilter').value;
+    const feeMonthVal = document.getElementById('feeMonthFilter').value;
+    
+    let records = loadFeeRecords();
+    
+    // Only show unpaid records
+    records = records.filter(r => r.status === "Unpaid");
+    
+    if (classVal) records = records.filter(r => r.className === classVal);
+    if (feeTypeVal) records = records.filter(r => r.feeType === feeTypeVal);
+    if (feeMonthVal) records = records.filter(r => r.feeMonth === feeMonthVal);
+    if (search) {
+      records = records.filter(r =>
+        r.studentName.toLowerCase().includes(search) ||
+        r.regNo.toLowerCase().includes(search) ||
+        r.feeType.toLowerCase().includes(search)
+      );
+    }
+    
+    return records;
+  }
+
+  function markAsPaid(recordId) {
+    const record = feeRecords.find(r => r.id === recordId);
+    if (!record || record.status === "Paid") return;
+    record.status = "Paid";
+    record.paidDateTime = new Date().toLocaleString('en-PK', { hour12: true });
+    record.receiptNo = generateReceiptNumber();
+    saveFeeRecords(feeRecords);
+    showToast(`✅ Payment marked as Paid! Receipt: ${record.receiptNo}`);
+    renderFeeTable();
+  }
+
+  function renderFeeTable() {
+    const tbody = document.getElementById('feeTableBody');
+    const pendingRecords = getFilteredRecords();
+
+    if (pendingRecords.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:32px; color:#94a3b8;"><i class="fas fa-inbox"></i> No pending fee records match your filters.</td></tr>`;
+      document.getElementById('feeCountBadge').textContent = 0;
+      return;
+    }
+
+    tbody.innerHTML = pendingRecords.map(record => {
+      let photoHtml = record.photoUrl
+        ? `<img src="${record.photoUrl}" class="photo-thumb" alt="student">`
+        : `<div class="photo-placeholder"><i class="fas fa-user-graduate"></i></div>`;
+      return `
+        <tr>
+          <td>${photoHtml}</td>
+          <td><strong>${record.regNo}</strong></td>
+          <td>${record.studentName}</td>
+          <td>${record.className}</td>
+          <td>${record.feeType}</td>
+          <td>${record.feeMonth}</td>
+          <td>${formatDueDate(record.dueDate)}</td>
+          <td><strong>PKR ${record.amount.toLocaleString()}</strong></td>
+          <td style="text-align:right">
+            <div class="action-icons">
+              <select class="payment-select unpaid-style" onchange="if(this.value==='Paid'){markAsPaid('${record.id}');}this.value='Unpaid';">
+                <option value="Unpaid" selected>Unpaid</option>
+                <option value="Paid">Mark Paid</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    document.getElementById('feeCountBadge').textContent = pendingRecords.length;
+  }
+
+  function showToast(msg) {
+    let t = document.createElement('div');
+    t.className = 'toast-msg';
+    t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2800);
+  }
+</script>
+</body>
+</html>

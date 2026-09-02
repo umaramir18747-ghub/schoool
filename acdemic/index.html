@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EHS – Academic Management Dashboard</title>
+
+   <link rel="icon" type="image/png" href="../logo2.png">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+  <link rel="stylesheet" href="../dashboard.css">
+  c
+
+</head>
+<body>
+
+  <!-- Header will be loaded here -->
+  <div id="header-placeholder"></div>
+
+  <div class="app-wrapper" id="appWrapper">
+    
+    <!-- Sidebar will be loaded here -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="main-panel">
+      <!-- Watermark Logo -->
+      <div class="watermark" aria-hidden="true"></div>
+
+      <!-- Welcome Banner + Profile Photo, in one row -->
+      <div class="top-row">
+        <!-- Welcome Section (greeting + quick links) -->
+        <section class="welcome-section">
+          <h1 class="welcome-title">Welcome Back, <span>Muhammad umar</span></h1>
+          <div class="welcome-role">Academic Management</div>
+          <p class="welcome-text">Manage classes, attendance, assignments and announcements from one place.</p>
+
+          <div class="quick-links-grid">
+            <a href="view-assign-subjects.html" class="quick-link-card">
+              <div class="quick-link-icon icon-ql-classes"><i class="fas fa-book-reader"></i></div>
+              <div class="quick-link-info">
+                <div class="quick-link-title">Subjects</div>
+                <div class="quick-link-subtitle">View Assigning</div>
+              </div>
+            </a>
+            <a href="view-attendance-roster.html" class="quick-link-card">
+              <div class="quick-link-icon icon-ql-attendance"><i class="fas fa-calendar-check"></i></div>
+              <div class="quick-link-info">
+                <div class="quick-link-title">Attendance</div>
+                <div class="quick-link-subtitle">View Rosters</div>
+              </div>
+            </a>
+            <a href="#" class="quick-link-card">
+              <div class="quick-link-icon icon-ql-assignments"><i class="fas fa-object-group"></i></div>
+              <div class="quick-link-info">
+                <div class="quick-link-title">Merge</div>
+                <div class="quick-link-subtitle">View Classes</div>
+              </div>
+            </a>
+            <a href="#" class="quick-link-card">
+              <div class="quick-link-icon icon-ql-announcements"><i class="fas fa-chart-bar"></i></div>
+              <div class="quick-link-info">
+                <div class="quick-link-title">Reports</div>
+                <div class="quick-link-subtitle">Make Reports</div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="welcome-divider" aria-hidden="true"></div>
+
+        <!-- Profile Picture Frame -->
+        <!-- Profile Picture Frame -->
+        <section class="profile-card">
+  <div class="passport-frame">
+    <img
+      src="profile.jpg"
+      alt="Manager"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    />
+
+    <div class="profile-fallback">
+      <i class="fa fa-user-tie"></i>
+    </div>
+  </div>
+
+  <div class="profile-name">Muhammad Umar</div>
+  <div class="profile-role">Manager</div>
+
+  <div class="profile-status">
+    <span class="status-dot"></span>Online
+  </div>
+</section>
+      </div>
+
+      <!-- Academic Details -->
+      <div class="dashboard-section">
+        <div class="section-title">
+          <i class="fas fa-chalkboard-teacher"></i> Academic Overview
+        </div>
+        <div class="cards-grid">
+          <div class="stat-card">
+            <div class="card-icon icon-classes"><i class="fas fa-chalkboard"></i></div>
+            <div class="card-info"><div class="card-label">Total Classes</div><div class="card-value">18</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="card-icon icon-active-c"><i class="fas fa-calendar-plus"></i></div>
+            <div class="card-info"><div class="card-label">Total Makeup Classes</div><div class="card-value">4</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="card-icon icon-active-t"><i class="fas fa-link"></i></div>
+            <div class="card-info"><div class="card-label">Total Merged Classes</div><div class="card-value">2</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="card-icon icon-students"><i class="fas fa-clipboard-list"></i></div>
+            <div class="card-info"><div class="card-label">Attendance Rosters</div><div class="card-value">45</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="card-icon icon-active-s"><i class="fas fa-bullhorn"></i></div>
+            <div class="card-info"><div class="card-label">Announcements</div><div class="card-value">7</div></div>
+          </div>
+          <div class="stat-card">
+            <div class="card-icon icon-teachers"><i class="fas fa-book-reader"></i></div>
+            <div class="card-info"><div class="card-label">Assign Subjects</div><div class="card-value">32</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help & Guidance Section (at bottom) -->
+      <section class="help-section">
+        <div class="section-title"><i class="fas fa-circle-info"></i> Help & Guidance</div>
+        <p class="help-text">Effortlessly manage classes, subjects, attendance, assignments, and announcements from one central dashboard.</p>
+        <p class="help-text">Track makeup and merged classes, generate rosters, and stay updated with real-time academic insights.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+
+  <script>
+    // Load Header and Sidebar
+    function loadComponents() {
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+        })
+        .catch(err => console.error('Error loading header:', err));
+
+      fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('sidebar-placeholder').innerHTML = data;
+        })
+        .catch(err => console.error('Error loading sidebar:', err));
+    }
+
+    window.onload = function() {
+      loadComponents();
+      setTimeout(() => {
+        if (typeof window.initHeaderAndSidebar === 'function') {
+          window.initHeaderAndSidebar();
+        }
+      }, 400);
+
+      renderAcademicStats();
+    };
+
+    // ===== Storage Helpers =====
+    function loadFromStorage(key) {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function setStatByLabel(labelText, value) {
+      document.querySelectorAll('.stat-card').forEach(card => {
+        const label = card.querySelector('.card-label');
+        if (label && label.textContent.trim() === labelText) {
+          const valueEl = card.querySelector('.card-value');
+          if (valueEl) valueEl.textContent = value;
+        }
+      });
+    }
+
+    function renderAcademicStats() {
+      const classes = loadFromStorage('messClasses');
+      const rosters = loadFromStorage('messAttendanceRosters');
+      const assignments = loadFromStorage('messAssignments');
+
+      setStatByLabel('Total Classes', classes.length);
+      setStatByLabel('Attendance Rosters', rosters.length);
+      setStatByLabel('Assignments', assignments.length);
+      // Note: "Total Makeup Classes", "Total Merged Classes" and "Announcements" have
+      // no corresponding data source in this system yet, so they are left as-is.
+    }
+  </script>
+</body>
+</html>

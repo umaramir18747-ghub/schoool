@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – My Assigned Subjects</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-user-tie" style="color:#2563eb;"></i> My Assigned Subjects</h1>
+        <p>All subjects and classes currently assigned to you</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-id-badge"></i> Teacher Overview
+        </div>
+
+        <!-- dynamic teacher info -->
+        <div class="teacher-info-grid" id="teacherInfoGrid">
+          <div class="teacher-info-item">
+            <label><i class="fas fa-user-tie"></i> Teacher Name</label>
+            <span id="teacherName">—</span>
+          </div>
+          <div class="teacher-info-item">
+            <label><i class="fas fa-book-open"></i> Total Subjects</label>
+            <span id="totalSubjects">0</span>
+          </div>
+          <div class="teacher-info-item">
+            <label><i class="fas fa-chalkboard"></i> Total Classes</label>
+            <span id="totalClasses">0</span>
+          </div>
+        </div>
+
+        <!-- dynamic subjects grid -->
+        <div class="subjects-grid" id="subjectsGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="teacher-subjects.js"></script>
+</body>
+</html>

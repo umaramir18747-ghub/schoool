@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Education Institute — Learn with Intent</title>
+  <link rel="icon" type="image/png" href="logo2.png" />
+  <link rel="stylesheet" href="main.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="main-header">
+    <div class="nav-container">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="brand">
+        <div class="logo-box">
+          <div class="logo-inner">M</div>
+        </div>
+        <div class="brand-text">
+          <span class="school-name">Muhammad Education Institute</span>
+          <span class="school-tagline">Learn with Intent</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="desktop-nav">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#news" class="nav-link">News & Gallery</a></li>
+          
+          <li class="nav-dropdown">
+            <a href="#academics" class="nav-link dropdown-toggle">
+              Academics <span class="arrow">▼</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#academics-curriculum">📚 Modern Curriculum</a></li>
+              <li><a href="#academics-subjects">🎓 Core Sciences</a></li>
+              <li><a href="#academics-programs">🏆 Advanced Robotics & STEM</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-dropdown">
+            <a href="#admissions" class="nav-link dropdown-toggle">
+              Admissions <span class="arrow">▼</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#admissions-requirements">📋 Admission Requirements</a></li>
+              <li><a href="#admissions-process">📝 3-Step Application</a></li>
+              <li><a href="#admissions-fee">💰 Fee & Scholarships</a></li>
+            </ul>
+          </li>
+
+          <li><a href="#about" class="nav-link">About Us</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Buttons -->
+      <div class="nav-actions">
+        <a href="index.html" class="btn-portal">
+          <span>Portal Login</span>
+        </a>
+
+        <button id="menu-toggle-btn" class="menu-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="mobile-menu">
+      <ul class="mobile-nav-links">
+        <li><a href="#home">🏠 Home</a></li>
+        <li><a href="#news">📰 News & Gallery</a></li>
+        <li><a href="#academics">📚 Academics & Curriculum</a></li>
+        <li><a href="#admissions">📋 Admissions & Fee</a></li>
+        <li><a href="#about">ℹ️ About Us</a></li>
+        <li><a href="#contact">📞 Contact</a></li>
+        <li class="mobile-cta-li">
+          <button id="mobile-enroll-btn" class="btn-primary w-full">Enroll Student 2026</button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ================= 1. HERO SECTION (HOME) ================= -->
+  <section id="home" class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tagline">
+        ✦ Learn with Intent
+      </div>
+      <h1 class="hero-title">
+        Empowering Minds. <br />
+        <span class="highlight-gold">Shaping Purposeful Futures.</span>
+      </h1>
+      <p class="hero-description">
+        At <strong>Muhammad Education Institute</strong>, we believe every child has the potential to learn, grow, and achieve something meaningful. Our goal is to create an inspiring environment where students build <strong>strong knowledge, good character, confidence</strong>, and essential life skills.
+      </p>
+
+      <div class="hero-buttons">
+        <button id="hero-enroll-btn" class="btn-primary">
+          Enroll Your Child Today →
+        </button>
+        <a href="#about" class="btn-secondary">
+          Discover Our Legacy
+        </a>
+      </div>
+
+      <div class="hero-badges">
+        <div class="badge-item">✓ Punjab & O/A Levels</div>
+        <div class="badge-item">✓ Modern STEM & Labs</div>
+        <div class="badge-item">✓ Character & Ethics</div>
+      </div>
+    </div>
+
+    <!-- Hero Stats Ribbon -->
+    <div class="hero-stats-ribbon">
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Board Pass Rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">15:1</div>
+          <div class="stat-label">Student-Teacher Ratio</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">35+</div>
+          <div class="stat-label">Experienced Faculty</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Annual Distinctions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. NEWS & GALLERY ================= -->
+  <section id="news" class="news-section">
+    <!-- News Ticker -->
+    <div class="news-ticker-bar">
+      <div class="ticker-title">LATEST NEWS</div>
+      <div class="ticker-content">
+        <div class="marquee-track">
+          <span>🎓 Admissions Open for 2026-2027 Session — Merit Scholarships Available</span>
+          <span class="separator">✦</span>
+          <span>📚 Our Students Achieve 100% Pass Rate in Punjab & Cambridge Board Examinations</span>
+          <span class="separator">✦</span>
+          <span>⚽ Annual Inter-School Sports Gala & Athletics Championship Starting Next Week</span>
+          <span class="separator">✦</span>
+          <span>🏆 National STEM & Robotics Olympiad: 1st Position Awarded to Muhammad Education Institute</span>
+          <span class="separator">✦</span>
+          <span>🎓 Admissions Open for 2026-2027 Session — Merit Scholarships Available</span>
+          <span class="separator">✦</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-container">
+      <div class="section-header">
+        <div class="eyebrow">✦ Campus Happenings & Visual Journey</div>
+        <h2 class="section-title">News Gallery & Campus Life</h2>
+        <p class="section-subtitle">Explore our vibrant student community, academic milestones, and modern facilities.</p>
+      </div>
+
+      <!-- 3-Panel Visual Showcase Box -->
+      <div class="gallery-wrapper">
+        <div class="gallery-side" id="gallery-prev-box">
+          <div class="preview-label">‹ Previous</div>
+          <div class="preview-card">
+            <img id="prev-preview-img" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=600&auto=format&fit=crop" alt="Previous Slide" />
+            <div id="prev-preview-title" class="preview-caption">Creative Arts Studio</div>
+          </div>
+        </div>
+
+        <div class="gallery-main">
+          <div class="main-image-card">
+            <img id="main-gallery-img" src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1200&auto=format&fit=crop" alt="Main Showcase" />
+            <div id="main-gallery-tag" class="gallery-tag">Campus Facilities</div>
+            <div class="main-image-overlay">
+              <h3 id="main-gallery-title">Modern Science & Innovation Labs</h3>
+              <p id="main-gallery-desc">State-of-the-art physics, chemistry, and digital computing laboratories providing practical experimental training.</p>
+            </div>
+          </div>
+
+          <div class="gallery-controls">
+            <button id="gallery-prev-btn" class="btn-outline">‹ Previous</button>
+            <div id="gallery-dots" class="dots-container"></div>
+            <button id="gallery-next-btn" class="btn-outline">Next ›</button>
+          </div>
+        </div>
+
+        <div class="gallery-side" id="gallery-next-box">
+          <div class="preview-label">Next ›</div>
+          <div class="preview-card">
+            <img id="next-preview-img" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=600&auto=format&fit=crop" alt="Next Slide" />
+            <div id="next-preview-title" class="preview-caption">Smart Classrooms</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- News Articles Grid -->
+      <div class="news-grid">
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="news-badge">Admissions</span>
+            <span class="news-date">August 2026</span>
+          </div>
+          <h3 class="news-title">Admissions Open for Session 2026–2027</h3>
+          <p class="news-excerpt">Registration is now open for Early Years, Primary, Middle, Matriculation, and O/A Levels with merit scholarships.</p>
+          <a href="#contact" class="news-link">Inquire Now →</a>
+        </article>
+
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="news-badge">Academic</span>
+            <span class="news-date">July 2026</span>
+          </div>
+          <h3 class="news-title">Outstanding Results in Board Examinations</h3>
+          <p class="news-excerpt">Our secondary school students secured top 5 district positions, achieving straight A* and A grades across all core sciences.</p>
+          <a href="#academics" class="news-link">View Academic Record →</a>
+        </article>
+
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="news-badge">Events</span>
+            <span class="news-date">June 2026</span>
+          </div>
+          <h3 class="news-title">Annual Science & Tech Fair Showcases 50+ Inventions</h3>
+          <p class="news-excerpt">From solar-powered irrigation prototypes to AI math tutors, students displayed innovation and real-world problem-solving.</p>
+          <a href="#about" class="news-link">Learn More →</a>
+        </article>
+
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="news-badge">Sports</span>
+            <span class="news-date">May 2026</span>
+          </div>
+          <h3 class="news-title">Sports Gala Champions: 18 Medals Won</h3>
+          <p class="news-excerpt">Our institute track-and-field and cricket squads clinched victory at the Regional Interschool Athletics Championship.</p>
+          <a href="#contact" class="news-link">Read More →</a>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 3. ABOUT US SECTION ================= -->
+  <section id="about" class="about-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="eyebrow">✦ Institutional Philosophy & Heritage</div>
+        <h2 class="section-title">About Muhammad Education Institute</h2>
+        <p class="section-subtitle">Dedicated to educational excellence, moral integrity, and empowering the leaders of tomorrow.</p>
+      </div>
+
+      <!-- Two-Column Layout from about.html -->
+      <div class="about-two-column">
+        <!-- Left Column -->
+        <div class="about-left-col">
+          <div class="school-header-card">
+            <div class="header-logo-box">MEI</div>
+            <h3 class="header-title">Muhammad Education Institute</h3>
+            <div class="header-tagline">Learn with Intent</div>
+          </div>
+
+          <div class="legacy-card">
+            <h4 class="legacy-title"><span>✦</span> Our Legacy of Excellence</h4>
+            <p class="legacy-text">
+              Over the years, we are committed to creating an environment where students develop strong academic foundations, positive character, creativity, discipline, and the confidence to face the future. Through dedicated teaching, meaningful activities, and individual guidance, we encourage every student to discover their abilities and make the most of their potential.
+            </p>
+            <div class="quote-banner">
+              "At Muhammad Education Institute, we encourage every student to believe in themselves, set meaningful goals, and work towards them with sincerity. <strong>Do not be afraid of mistakes or failure—learn from them, try again, and keep moving forward.</strong>"
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="about-right-col">
+          <!-- Vision Card -->
+          <div class="info-card vision-card">
+            <h4 class="info-card-title">⭐ Our Vision</h4>
+            <p class="info-card-text">
+              A student who works hard and continues moving forward, even after facing difficulties, can achieve more than someone who has ability but does not make the effort. Your determination, patience, and consistent effort can turn your dreams into reality.
+            </p>
+          </div>
+
+          <!-- Mission Card -->
+          <div class="info-card mission-card">
+            <h4 class="info-card-title">🏆 Our Mission</h4>
+            <p class="info-card-text">
+              To provide quality education through innovative teaching methods, fostering creativity, critical thinking, and moral values in every student. We empower learners to embrace challenges, think independently, and become agents of positive change.
+            </p>
+          </div>
+
+          <!-- Principal's Card -->
+          <div class="info-card principal-card">
+            <h4 class="info-card-title">💬 Principal's Message</h4>
+            <p class="principal-quote">
+              "I always remind my students that having a goal is the first step toward achieving it. Success does not always belong to the person who is naturally the best; it belongs to the person who is willing to keep trying, keep learning, and never give up."
+            </p>
+            <div class="principal-signature">— Muhammad Umar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. ACADEMICS SECTION ================= -->
+  <section id="academics" class="academics-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="eyebrow">✦ Academic Rigor & Progressive Learning</div>
+        <h2 class="section-title">Comprehensive Academic Programs</h2>
+        <p class="section-subtitle">Structured educational pathways tailored to cultivate intellectual curiosity, moral clarity, and academic mastery.</p>
+      </div>
+
+      <!-- Curriculum Stages Grid -->
+      <div id="academics-curriculum" class="programs-grid">
+        <div class="program-card">
+          <div class="prog-badge">Foundational Stage</div>
+          <h3 class="prog-title">Early Childhood & Montessori</h3>
+          <p class="prog-desc">Nurturing curiosity, phonetics, sensory exploration, and emotional intelligence through joyful discovery-based learning.</p>
+          <ul class="prog-list">
+            <li>✓ Play-based cognitive growth</li>
+            <li>✓ Language immersion & phonics</li>
+            <li>✓ Caring child-to-staff ratio</li>
+          </ul>
+        </div>
+
+        <div class="program-card">
+          <div class="prog-badge">Grades 1 – 5</div>
+          <h3 class="prog-title">Primary School Academy</h3>
+          <p class="prog-desc">Building solid mastery in foundational numeracy, bilingual literacy, scientific inquiry, and civic values.</p>
+          <ul class="prog-list">
+            <li>✓ Singapore Math & Logic</li>
+            <li>✓ Bilingual English & Urdu</li>
+            <li>✓ Computational thinking</li>
+          </ul>
+        </div>
+
+        <div class="program-card">
+          <div class="prog-badge">Grades 6 – 8</div>
+          <h3 class="prog-title">Middle School Excellence</h3>
+          <p class="prog-desc">Cultivating analytical reasoning, independent research, scientific experimentation, and leadership qualities.</p>
+          <ul class="prog-list">
+            <li>✓ Hands-on science lab projects</li>
+            <li>✓ Robotics & Python Coding</li>
+            <li>✓ Debating & MUN training</li>
+          </ul>
+        </div>
+
+        <div class="program-card">
+          <div class="prog-badge">Senior Secondary</div>
+          <h3 class="prog-title">Matric & Cambridge O/A Levels</h3>
+          <p class="prog-desc">Rigorous preparation for university admissions, standardized board exams, and professional career readiness.</p>
+          <ul class="prog-list">
+            <li>✓ Pre-Med, Pre-Eng & ICS</li>
+            <li>✓ Cambridge O-Level & A-Level</li>
+            <li>✓ University Admissions Prep</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. ADMISSIONS SECTION ================= -->
+  <section id="admissions" class="admissions-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="eyebrow">✦ Admissions Session 2026–2027</div>
+        <h2 class="section-title">Join Our Learning Community</h2>
+        <p class="section-subtitle">A seamless, transparent admission process designed to understand and nurture your child's distinct strengths.</p>
+      </div>
+
+      <!-- 3-Step Process -->
+      <div id="admissions-process" class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">STEP 01</div>
+          <h3 class="step-title">Online Registration</h3>
+          <p class="step-desc">Fill out the digital application or visit the campus office with student records and birth certificate.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">STEP 02</div>
+          <h3 class="step-title">Diagnostic Assessment</h3>
+          <p class="step-desc">A friendly, informal aptitude interaction to understand grade readiness in an encouraging setting.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">STEP 03</div>
+          <h3 class="step-title">Offer & Orientation</h3>
+          <p class="step-desc">Receive admission package, student portal credentials, and join the welcome orientation session.</p>
+        </div>
+      </div>
+
+      <!-- Fee & Requirements Box -->
+      <div id="admissions-requirements" class="admissions-banner">
+        <div class="banner-text">
+          <h3>Ready to Begin Your Educational Journey?</h3>
+          <p>Merit scholarships up to 50% available for academic achievers and sibling concessions.</p>
+        </div>
+        <button id="admissions-apply-btn" class="btn-gold">
+          Submit Admission Application 2026
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. CONTACT US (from contact.html) ================= -->
+  <section id="contact" class="contact-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="eyebrow">✦ Admissions & Inquiries</div>
+        <h2 class="section-title">Connect With Our Leadership</h2>
+        <p class="section-subtitle">Have questions about admissions, curriculum, or campus visits? Our team is here to assist you.</p>
+      </div>
+
+      <!-- Contact Container Matching contact.html -->
+      <div class="contact-main-card">
+        
+        <!-- Left Blue Sidebar -->
+        <div class="contact-left-sidebar">
+          <h3 class="sidebar-heading">Get in Touch</h3>
+
+          <div class="contact-items-list">
+            <div class="c-item">
+              <div class="c-icon">📍</div>
+              <div class="c-info">
+                <div class="c-title">Campus Address</div>
+                <div class="c-desc">Main Campus: Lahore, Punjab<br/>Branch: Peoples Colony, Faisalabad</div>
+              </div>
+            </div>
+
+            <div class="c-item">
+              <div class="c-icon">📞</div>
+              <div class="c-info">
+                <div class="c-title">Direct Telephones</div>
+                <div class="c-desc">+92 (300) 1234567<br/>+92 (321) 9876543 / 041-1234567</div>
+              </div>
+            </div>
+
+            <div class="c-item">
+              <div class="c-icon">✉️</div>
+              <div class="c-info">
+                <div class="c-title">Official Email</div>
+                <div class="c-desc">info@muhammadedu.com<br/>admissions@muhammadedu.com</div>
+              </div>
+            </div>
+
+            <div class="c-item">
+              <div class="c-icon">⏰</div>
+              <div class="c-info">
+                <div class="c-title">Office Hours</div>
+                <div class="c-desc">Mon - Fri: 8:00 AM - 4:00 PM<br/>Sat: 9:00 AM - 1:00 PM</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-box">
+            <div class="social-heading">Follow Us</div>
+            <div class="social-btn-row">
+              <a href="#" class="social-link">FB</a>
+              <a href="#" class="social-link">IG</a>
+              <a href="#" class="social-link">WA</a>
+              <a href="#" class="social-link">IN</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right White Form -->
+        <div class="contact-right-form">
+          <h3 class="form-heading">Send Us a Message</h3>
+
+          <form id="institute-contact-form">
+            <div class="form-row">
+              <div class="form-col">
+                <input type="text" id="c-name" placeholder="Your Name" required />
+              </div>
+              <div class="form-col">
+                <input type="email" id="c-email" placeholder="Your Email" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-col">
+                <input type="tel" id="c-phone" placeholder="Your Phone Number" required />
+              </div>
+              <div class="form-col">
+                <input type="text" id="c-subject" placeholder="Subject / Grade Level" required />
+              </div>
+            </div>
+
+            <div class="form-full">
+              <textarea id="c-message" placeholder="Your Message regarding enrollment, campus visit, or general queries..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              Send Message
+            </button>
+          </form>
+
+          <div id="contact-success-msg" class="success-message" style="display:none;">
+            ✓ Message sent successfully! An admissions advisor will contact you within 24 hours.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. FOOTER (from footer.html) ================= -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        
+        <!-- Left: Brand -->
+        <div class="footer-col brand-col">
+          <h3 class="footer-school-name">Muhammad Education Institute</h3>
+          <div class="footer-tagline">Learn with Intent</div>
+          <div class="footer-est">
+            Where young minds learn with intent, grow with purpose, and prepare for the future.
+          </div>
+        </div>
+
+        <!-- Middle: Quick Links -->
+        <div class="footer-col links-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#home">› Home</a></li>
+            <li><a href="#news">› News & Gallery</a></li>
+            <li><a href="#about">› About Us</a></li>
+            <li><a href="#academics">› Academics</a></li>
+            <li><a href="#admissions">› Admissions</a></li>
+            <li><a href="#contact">› Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Right: Contact -->
+        <div class="footer-col contact-col">
+          <h4 class="footer-heading">Contact Information</h4>
+          <div class="f-contact-item">
+            <span>📞</span>
+            <a href="tel:0411234567">041-1234567 / +92 300 1234567</a>
+          </div>
+          <div class="f-contact-item">
+            <span>✉️</span>
+            <a href="mailto:muhammadeducation@gmail.com">muhammadeducation@gmail.com</a>
+          </div>
+          <div class="f-contact-item">
+            <span>📍</span>
+            <span>Peoples Colony, Faisalabad & Lahore, Punjab</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div class="copyright-text">
+          © 2026 Muhammad Education Institute. All rights reserved.
+        </div>
+        <div class="portal-badge">
+          ★ <span><strong>Portal</strong> — Developed by Muhammad Umar</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= ADMISSION APPLICATION MODAL ================= -->
+  <div id="admission-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Admission Application 2026–2027</h3>
+        <button id="close-admission-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="admission-app-form">
+          <div class="form-group">
+            <label>Student's Full Name *</label>
+            <input type="text" id="adm-student" placeholder="e.g. Zaid Tariq" required />
+          </div>
+          <div class="form-group">
+            <label>Parent / Guardian Name *</label>
+            <input type="text" id="adm-parent" placeholder="e.g. Tariq Mehmood" required />
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Contact Number *</label>
+            <input type="tel" id="adm-phone" placeholder="e.g. +92 300 1234567" required />
+          </div>
+          <div class="form-group">
+            <label>Applying Grade / Level *</label>
+            <select id="adm-grade" required>
+              <option value="Montessori">Montessori / Early Childhood</option>
+              <option value="Primary">Primary School (Grades 1-5)</option>
+              <option value="Middle">Middle School (Grades 6-8)</option>
+              <option value="Matric">Matriculation (Science)</option>
+              
+            </select>
+          </div>
+          <button type="submit" class="btn-gold w-full" style="margin-top:10px;">
+            Submit Application & Schedule Assessment
+          </button>
+        </form>
+
+        <div id="admission-success-box" style="display:none;" class="success-box">
+          <h4>✓ Application Registered!</h4>
+          <p id="adm-ref-text">Ref ID: MEI-ADM-84910</p>
+          <p>Our admissions desk will contact you via WhatsApp/Phone within 24 hours to schedule the diagnostic assessment dialogue.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

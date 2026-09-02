@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – Manage Results</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-clipboard-list" style="color:#2563eb;"></i> Manage Results</h1>
+        <p>Enter and manage test / paper results for your assigned classes</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-id-badge"></i> Teacher Overview
+        </div>
+
+        <!-- dynamic teacher info -->
+        <div class="teacher-info-grid" id="teacherInfoGrid">
+          <div class="teacher-info-item">
+            <label><i class="fas fa-user-tie"></i> Teacher Name</label>
+            <span id="teacherName">—</span>
+          </div>
+          <div class="teacher-info-item">
+            <label><i class="fas fa-book-open"></i> Total Subjects</label>
+            <span id="totalSubjects">0</span>
+          </div>
+          <div class="teacher-info-item">
+            <label><i class="fas fa-chalkboard"></i> Total Classes</label>
+            <span id="totalClasses">0</span>
+          </div>
+        </div>
+
+        <!-- dynamic subjects grid -->
+        <div class="subjects-grid" id="subjectsGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="resultModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h2><i class="fas fa-clipboard-list"></i> <span id="modalTitle">Enter Results</span></h2>
+          <div class="sub" id="modalSub">Class · Class ID</div>
+        </div>
+        <button class="modal-close" onclick="closeResultModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="type-select">
+          <button class="type-btn active" id="testTypeBtn" onclick="setResultType('test')"><i class="fas fa-pen"></i> Test</button>
+          <button class="type-btn" id="paperTypeBtn" onclick="setResultType('paper')"><i class="fas fa-file-lines"></i> Paper</button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label><i class="fas fa-heading"></i> <span id="nameLabel">Test Name</span></label>
+            <input type="text" id="assessmentName" placeholder="e.g. Mid Term Test">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-star"></i> Total Marks</label>
+            <input type="number" id="totalMarks" placeholder="e.g. 50">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-calendar-alt"></i> Date</label>
+            <input type="date" id="assessmentDate">
+          </div>
+        </div>
+
+        <div class="section-label"><i class="fas fa-users"></i> Student List</div>
+
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Registration No.</th>
+              <th>Name</th>
+              <th>Obtained Marks</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody">
+          </tbody>
+        </table>
+
+        <div class="save-row">
+          <button class="save-btn" onclick="saveResults()"><i class="fas fa-save"></i> Save Results</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><i class="fas fa-circle-check"></i> <span id="toastMsg">Results saved successfully!</span></div>
+
+  <script src="../components.js"></script>
+  <script src="teacher-results.js"></script>
+</body>
+</html>

@@ -1,0 +1,1645 @@
+/* ============================================
+   FEE.CSS - Unified Styles for All Fee Management Pages
+   Includes: Assign Fee, Mark Payment, View Fee Details
+   All Icons Colored Blue | Table Headers Blue
+   Fully Responsive | Full Width Layout
+   ============================================ */
+
+/* ===== RESET & GLOBAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+}
+
+body {
+  background: #f1f5f9;
+  color: #0f172a;
+  overflow-x: hidden;
+}
+
+/* ===== APP CONTAINER - FULL WIDTH ===== */
+.app-wrapper {
+  width: 100%;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  flex: 1;
+}
+
+/* ===== MAIN PANEL - FULL WIDTH ===== */
+.main-panel {
+  flex: 1;
+  padding: 24px 32px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  transition: all 0.3s;
+}
+
+/* ===== PAGE HEADER - FULL WIDTH ===== */
+.page-header {
+  background: white;
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e9eef3;
+  width: 100%;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.page-header h1 i {
+  color: #2563eb;
+  background: none;
+  -webkit-text-fill-color: #2563eb;
+}
+
+.page-header p {
+  color: #475569;
+  margin-top: 8px;
+  font-size: 15px;
+  border-left: 3px solid #3b82f6;
+  padding-left: 16px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: white;
+  padding: 40px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+  border: 1px solid #f1f5f9;
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-title i {
+  color: #2563eb;
+  font-size: 22px;
+}
+
+/* ===== DATA CARD ===== */
+.data-card {
+  background: white;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+  overflow: hidden;
+  width: 100%;
+}
+
+.card-header {
+  padding: 20px 28px;
+  background: #fefefe;
+  border-bottom: 1px solid #eef2f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card-header h2 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-header h2 i {
+  color: #2563eb;
+}
+
+.badge-count {
+  background: #eef2ff;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+/* ===== GRID LAYOUTS ===== */
+.form-grid-5cols {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+
+.form-grid-2cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.form-grid-2cols-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.form-grid-full {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* ===== FORM GROUPS ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group label i {
+  color: #2563eb;
+  width: 18px;
+  text-align: center;
+}
+
+.req {
+  color: #ef4444;
+  margin-left: 3px;
+}
+
+/* ===== FORM CONTROLS ===== */
+.form-control {
+  padding: 14px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0;
+  font-size: 15.2px;
+  color: #1e293b;
+  transition: all 0.25s;
+  background: white;
+  width: 100%;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.form-control:disabled {
+  background: #f8fafc;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ===== MONTH PICKER ===== */
+.month-picker-wrapper {
+  position: relative;
+}
+
+.month-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  padding: 14px 16px;
+  transition: all 0.25s;
+}
+
+.month-display:hover {
+  border-color: #3b82f6;
+}
+
+.month-display span {
+  color: #1e293b;
+  font-size: 15.2px;
+}
+
+.month-display i {
+  color: #94a3b8;
+}
+
+.month-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  margin-top: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: none;
+}
+
+.month-picker-dropdown.show {
+  display: block;
+}
+
+.year-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.year-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2563eb;
+  font-size: 18px;
+  padding: 8px;
+  transition: all 0.2s;
+}
+
+.year-nav button:hover {
+  background: #e2e8f0;
+}
+
+.current-year {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.months-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 20px;
+}
+
+.month-btn {
+  padding: 12px 8px;
+  text-align: center;
+  border: none;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s;
+}
+
+.month-btn:hover {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.month-btn.selected {
+  background: #2563eb;
+  color: white;
+}
+
+.picker-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.picker-actions button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-clear {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.btn-clear:hover {
+  background: #fecaca;
+}
+
+.btn-this-month {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.btn-this-month:hover {
+  background: #bfdbfe;
+}
+
+/* ===== FILTERS ROW ===== */
+.filters-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #eef2f8;
+  background: #fafcff;
+}
+
+.search-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 9px 14px 9px 38px;
+  font-size: 13.5px;
+  border: 1.5px solid #cbd5e1;
+  background: white;
+  outline: none;
+  min-width: 220px;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-wrap i {
+  position: absolute;
+  left: 12px;
+  color: #2563eb;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.filter-select {
+  padding: 9px 12px;
+  font-size: 13.5px;
+  border: 1.5px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  outline: none;
+  min-width: 140px;
+}
+
+.filter-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ===== TABLE WRAPPER - SCROLLABLE ===== */
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* ===== TABLE - FULL WIDTH ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  min-width: 100%;
+}
+
+/* ===== TABLE HEADERS - BLUE THEME ===== */
+th {
+  text-align: left;
+  padding: 18px 16px;
+  background: #2563eb;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: white;
+  border-bottom: 2px solid #1d4ed8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+th i {
+  color: white;
+  margin-right: 6px;
+}
+
+td {
+  padding: 16px 16px;
+  border-bottom: 1px solid #f0f2f5;
+  font-size: 14px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+td:last-child {
+  white-space: nowrap;
+}
+
+tr:hover {
+  background: #fafcff;
+}
+
+/* ===== STUDENT TABLE (Assign Fee) ===== */
+.student-table-wrapper {
+  overflow-x: auto;
+  margin-top: 24px;
+  width: 100%;
+}
+
+table.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  min-width: 100%;
+}
+
+table.student-table th {
+  background: #2563eb;
+  color: white;
+}
+
+table.student-table th:first-child,
+table.student-table td:first-child {
+  width: 70px;
+  min-width: 60px;
+  max-width: 70px;
+  text-align: center;
+}
+
+table.student-table th:nth-child(2),
+table.student-table td:nth-child(2) {
+  width: auto;
+  min-width: 110px;
+}
+
+table.student-table th:nth-child(3),
+table.student-table td:nth-child(3) {
+  width: auto;
+  min-width: 160px;
+}
+
+table.student-table th:nth-child(4),
+table.student-table td:nth-child(4) {
+  width: auto;
+  min-width: 150px;
+}
+
+table.student-table th:nth-child(5),
+table.student-table td:nth-child(5) {
+  width: auto;
+  min-width: 130px;
+}
+
+table.student-table th:nth-child(6),
+table.student-table td:nth-child(6) {
+  width: 80px;
+  min-width: 60px;
+  max-width: 80px;
+  text-align: center;
+}
+
+/* ===== PHOTO THUMBNAILS - EQUAL ALIGNMENT ===== */
+.photo-thumb {
+  width: 48px;
+  height: 55px;
+  object-fit: cover;
+  border: 2px solid #2563eb;
+  background: #f1f5f9;
+  display: block;
+  margin: 0 auto;
+}
+
+.photo-placeholder {
+  width: 48px;
+  height: 55px;
+  background: #eef2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 24px;
+  border: 2px solid #2563eb;
+  margin: 0 auto;
+}
+
+/* Assign Fee Photo Frames */
+.photo-frame {
+  width: 52px;
+  height: 62px;
+  border: 2px solid #2563eb;
+  overflow: hidden;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-frame-placeholder {
+  width: 52px;
+  height: 62px;
+  background: #eef2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 26px;
+  border: 2px solid #2563eb;
+  margin: 0 auto;
+}
+
+/* ===== FEE INPUT ===== */
+.fee-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid #e2e8f0;
+  font-size: 14.5px;
+  outline: none;
+}
+
+.fee-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ===== SELECT ALL ===== */
+.select-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.select-all input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.student-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-paid {
+  background: #d1fae5;
+  color: #166534;
+  border: 1px solid #a7f3d0;
+}
+
+.status-unpaid {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* ===== PAYMENT SELECT ===== */
+.payment-select {
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 1.5px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  width: 120px;
+}
+
+.payment-select.unpaid-style {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #991b1b;
+}
+
+.payment-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* ===== RECEIPT CODE ===== */
+.receipt-code {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e40af;
+  background: #eef2ff;
+  padding: 4px 10px;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+
+/* ===== ACTION ICONS ===== */
+.action-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.action-icons i {
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.action-icons .view-icon {
+  color: #3b82f6;
+  background: #eef2ff;
+}
+
+.action-icons .view-icon:hover {
+  background: #dbeafe;
+  transform: scale(1.1);
+}
+
+.action-icons .edit-icon {
+  color: #eab308;
+  background: #fef9e3;
+}
+
+.action-icons .edit-icon:hover {
+  background: #fef3c7;
+  transform: scale(1.1);
+}
+
+.action-icons .delete-icon {
+  color: #ef4444;
+  background: #feeceb;
+}
+
+.action-icons .delete-icon:hover {
+  background: #fee2e2;
+  transform: scale(1.1);
+}
+
+/* ===== BUTTONS ===== */
+.btn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn {
+  padding: 13px 28px;
+  border: none;
+  border-radius: 0;
+  font-size: 15.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+}
+
+.btn i {
+  color: inherit;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-primary i {
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+  background: #f8fafc;
+  color: #334155;
+  border: 1.5px solid #e2e8f0;
+}
+
+.btn-secondary i {
+  color: #2563eb;
+}
+
+.btn-secondary:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.btn-receipt {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2563eb;
+  font-size: 20px;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.btn-receipt:hover {
+  color: #1d4ed8;
+  transform: scale(1.1);
+}
+
+/* ============================================
+   RECEIPT MODAL
+   ============================================ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-box {
+  background: white;
+  width: 480px;
+  max-width: 95vw;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-header h3 i {
+  color: white;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.modal-close:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 28px;
+}
+
+.receipt-logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.receipt-logo .school-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e3a8a;
+  letter-spacing: 1px;
+}
+
+.receipt-logo .sub {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.receipt-divider {
+  border: none;
+  border-top: 2px dashed #cbd5e1;
+  margin: 16px 0;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 7px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.receipt-row:last-child {
+  border-bottom: none;
+}
+
+.receipt-row .label {
+  color: #64748b;
+  font-weight: 600;
+  min-width: 130px;
+}
+
+.receipt-row .value {
+  color: #1e293b;
+  font-weight: 700;
+  text-align: right;
+}
+
+.receipt-amount-box {
+  background: #eef2ff;
+  border: 1.5px solid #c7d2fe;
+  padding: 14px 20px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.receipt-amount-box .amt-label {
+  font-size: 14px;
+  color: #3730a3;
+  font-weight: 700;
+}
+
+.receipt-amount-box .amt-value {
+  font-size: 20px;
+  color: #1e3a8a;
+  font-weight: 800;
+}
+
+.receipt-footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.empty-state {
+  text-align: center;
+  padding: 56px 20px;
+  color: #94a3b8;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  color: #2563eb;
+}
+
+.empty-state p {
+  font-size: 15px;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+.toast-msg {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #1f2937;
+  color: white;
+  padding: 12px 24px;
+  font-size: 13px;
+  z-index: 2200;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideUp 0.35s ease;
+}
+
+.toast-msg i {
+  color: #3b82f6;
+  font-size: 18px;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   FULLY RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* ===== LARGE DESKTOP (1200px and below) ===== */
+@media (max-width: 1200px) {
+  .form-grid-5cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== TABLET / SMALL DESKTOP (992px and below) ===== */
+@media (max-width: 992px) {
+  .main-panel {
+    padding: 20px 16px;
+  }
+
+  .page-header {
+    padding: 20px 24px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 28px 24px;
+  }
+
+  .card-header {
+    padding: 16px 20px;
+  }
+
+  .filters-row {
+    padding: 14px 20px;
+  }
+
+  table {
+    min-width: 850px;
+  }
+
+  table.student-table {
+    min-width: 750px;
+  }
+
+  th,
+  td {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+
+  .photo-thumb,
+  .photo-placeholder {
+    width: 40px;
+    height: 46px;
+  }
+
+  .photo-frame,
+  .photo-frame-placeholder {
+    width: 44px;
+    height: 52px;
+  }
+
+  .search-input {
+    min-width: 180px;
+  }
+
+  .filter-select {
+    min-width: 120px;
+  }
+
+  /* Hide school name on tablets */
+  .receipt-logo .school-name {
+    display: none !important;
+  }
+  
+  .receipt-logo {
+    margin-bottom: 8px;
+  }
+}
+
+/* ===== MOBILE (768px and below) ===== */
+@media (max-width: 768px) {
+  .main-panel {
+    padding: 16px 12px;
+  }
+
+  .page-header {
+    padding: 16px 18px;
+  }
+
+  .page-header h1 {
+    font-size: 20px;
+    gap: 10px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    padding-left: 10px;
+    margin-top: 4px;
+  }
+
+  .card {
+    padding: 24px 16px;
+  }
+
+  .card-title {
+    font-size: 17px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .card-header {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-header h2 {
+    font-size: 15px;
+  }
+
+  .badge-count {
+    font-size: 12px;
+    padding: 2px 10px;
+  }
+
+  .filters-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+  }
+
+  .search-input {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* All grids become single column */
+  .form-grid-5cols,
+  .form-grid-2cols,
+  .form-grid-2cols-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .form-grid-full {
+    gap: 16px;
+  }
+
+  /* Table - Scrollable */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .student-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 750px;
+  }
+
+  table.student-table {
+    min-width: 650px;
+  }
+
+  th {
+    font-size: 11px;
+    padding: 12px 10px;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .photo-thumb,
+  .photo-placeholder {
+    width: 36px;
+    height: 42px;
+  }
+
+  .photo-frame,
+  .photo-frame-placeholder {
+    width: 40px;
+    height: 48px;
+  }
+
+  .fee-input {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  .payment-select {
+    width: 100px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .action-icons i {
+    font-size: 16px;
+    padding: 4px;
+  }
+
+  /* Buttons */
+  .btn-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* Month Picker */
+  .months-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 16px;
+  }
+
+  .month-btn {
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+
+  .picker-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Modal */
+  .modal-box {
+    width: 95vw;
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: 18px 20px;
+  }
+
+  .modal-header h3 {
+    font-size: 16px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .receipt-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .receipt-row .value {
+    text-align: left;
+  }
+
+  .receipt-amount-box {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  /* Toast */
+  .toast-msg {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    padding: 14px 20px;
+    font-size: 14px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Hide school name on mobile */
+  .receipt-logo .school-name {
+    display: none !important;
+  }
+  
+  .receipt-logo {
+    margin-bottom: 4px;
+  }
+}
+
+/* ===== SMALL MOBILE (480px and below) ===== */
+@media (max-width: 480px) {
+  .main-panel {
+    padding: 12px 8px;
+  }
+
+  .page-header {
+    padding: 12px 14px;
+  }
+
+  .page-header h1 {
+    font-size: 17px;
+    gap: 8px;
+  }
+
+  .page-header h1 i {
+    font-size: 18px;
+  }
+
+  .page-header p {
+    font-size: 12px;
+    padding-left: 8px;
+  }
+
+  .card {
+    padding: 18px 12px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
+
+  .card-title i {
+    font-size: 18px;
+  }
+
+  .card-header h2 {
+    font-size: 14px;
+  }
+
+  .badge-count {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  table.student-table {
+    min-width: 520px;
+  }
+
+  th {
+    font-size: 10px;
+    padding: 10px 8px;
+    letter-spacing: 0;
+  }
+
+  td {
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+
+  .photo-thumb,
+  .photo-placeholder {
+    width: 30px;
+    height: 36px;
+  }
+
+  .photo-thumb {
+    font-size: 14px;
+  }
+
+  .photo-frame,
+  .photo-frame-placeholder {
+    width: 34px;
+    height: 42px;
+  }
+
+  .photo-frame-placeholder i {
+    font-size: 16px;
+  }
+
+  .fee-input {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+
+  .payment-select {
+    width: 85px;
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+
+  .status-select {
+    font-size: 10px;
+    padding: 3px 6px;
+    min-width: 65px;
+  }
+
+  .action-icons i {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .btn-actions {
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 20px;
+  }
+
+  .months-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 12px;
+    gap: 6px;
+  }
+
+  .month-btn {
+    padding: 8px 4px;
+    font-size: 12px;
+  }
+
+  .year-nav {
+    padding: 12px 16px;
+  }
+
+  .year-nav button {
+    font-size: 16px;
+    padding: 6px;
+  }
+
+  .current-year {
+    font-size: 16px;
+  }
+
+  .picker-actions {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .picker-actions button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .modal-header {
+    padding: 14px 16px;
+  }
+
+  .modal-header h3 {
+    font-size: 15px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .receipt-logo .school-name {
+    display: none !important;
+  }
+
+  .receipt-logo {
+    margin-bottom: 4px;
+  }
+
+  .receipt-row {
+    font-size: 12px;
+    padding: 5px 0;
+  }
+
+  .receipt-row .label {
+    min-width: 100px;
+  }
+
+  .receipt-amount-box {
+    padding: 12px 16px;
+  }
+
+  .receipt-amount-box .amt-label {
+    font-size: 13px;
+  }
+
+  .receipt-amount-box .amt-value {
+    font-size: 17px;
+  }
+
+  .toast-msg {
+    padding: 10px 16px;
+    font-size: 12px;
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .empty-state i {
+    font-size: 36px;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+  }
+}
+
+/* ===== EXTRA SMALL (360px and below) ===== */
+@media (max-width: 360px) {
+  .main-panel {
+    padding: 8px 4px;
+  }
+
+  table {
+    min-width: 500px;
+  }
+
+  table.student-table {
+    min-width: 440px;
+  }
+
+  th {
+    font-size: 9px;
+    padding: 8px 6px;
+  }
+
+  td {
+    padding: 8px 6px;
+    font-size: 10px;
+  }
+
+  .photo-thumb,
+  .photo-placeholder {
+    width: 26px;
+    height: 32px;
+  }
+
+  .photo-frame,
+  .photo-frame-placeholder {
+    width: 28px;
+    height: 36px;
+  }
+
+  .photo-frame-placeholder i {
+    font-size: 12px;
+  }
+
+  .payment-select {
+    width: 75px;
+    padding: 3px 4px;
+    font-size: 10px;
+  }
+
+  .action-icons i {
+    font-size: 12px;
+    padding: 2px;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .months-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 8px;
+    gap: 4px;
+  }
+
+  .month-btn {
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+
+  .receipt-logo .school-name {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .btn-actions,
+  .action-icons,
+  .status-select,
+  .payment-select,
+  .btn-receipt,
+  .search-wrap,
+  .filter-select,
+  .filters-row {
+    display: none !important;
+  }
+
+  .data-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .page-header {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .modal-overlay {
+    display: none !important;
+  }
+
+  th {
+    background: #2563eb !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .table-wrapper {
+    overflow: visible !important;
+  }
+
+  table {
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Show school name in print */
+  .receipt-logo .school-name {
+    display: block !important;
+  }
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – My Exam Slip</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="student-slip.css">
+  <!-- Load libraries with integrity and fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <div>
+          <h1><i class="fas fa-file-alt"></i> My Exam Slip</h1>
+          <p>View and download your exam slip</p>
+        </div>
+        <button class="download-btn" onclick="downloadSlip()"><i class="fas fa-download"></i> Download PDF</button>
+      </div>
+
+      <div class="card">
+        <div class="slip-wrap">
+          <div class="slip-doc" id="examSlipDoc">
+
+            <!-- Header with MEI Logo (text) -->
+            <div class="slip-header">
+              <div class="slip-header-left">
+                <div class="slip-header-logo">
+                  MEI
+                </div>
+                <div>
+                  <h2 id="schoolName">Muhammad Education School</h2>
+                  <div class="school-tag" id="schoolTagline">Learn With Practical</div>
+                </div>
+              </div>
+              <div class="slip-header-right">
+                <div class="doc-title">Exam Slip</div>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="slip-body">
+
+              <!-- Student Info -->
+              <div class="student-strip">
+                <div class="student-fields">
+                  <div class="s-field">
+                    <label><i class="fas fa-user"></i> STUDENT NAME</label>
+                    <span id="studentName">—</span>
+                  </div>
+                  <div class="s-field">
+                    <label><i class="fas fa-user-tie"></i> FATHER NAME</label>
+                    <span id="fatherName">—</span>
+                  </div>
+                  <div class="s-field">
+                    <label><i class="fas fa-id-badge"></i> REGISTRATION NUMBER</label>
+                    <span id="regNumber">—</span>
+                  </div>
+                  <div class="s-field">
+                    <label><i class="fas fa-file-signature"></i> EXAM TYPE</label>
+                    <span id="examType">—</span>
+                  </div>
+                </div>
+                <div class="student-photo-box" id="photoBox">
+                  <i class="fas fa-user photo-placeholder"></i>
+                  <img id="studentPhoto" src="" alt="Student Photo" style="display:none;">
+                </div>
+              </div>
+
+              <!-- Class Info -->
+              <div class="class-strip">
+                <div class="c-field">
+                  <label><i class="fas fa-chalkboard-teacher"></i> CLASS NAME</label>
+                  <span id="className">—</span>
+                </div>
+                <div class="c-field">
+                  <label><i class="fas fa-id-card"></i> CLASS ID</label>
+                  <span id="classId">—</span>
+                </div>
+                <div class="c-field">
+                  <label><i class="fas fa-layer-group"></i> GRADE</label>
+                  <span id="grade">—</span>
+                </div>
+                <div class="c-field">
+                  <label><i class="fas fa-calendar-alt"></i> SESSION</label>
+                  <span id="session">—</span>
+                </div>
+                <div class="c-field">
+                  <label><i class="fas fa-tags"></i> SECTION</label>
+                  <span id="section">—</span>
+                </div>
+              </div>
+
+              <!-- Exam Schedule -->
+              <div class="schedule-section">
+                <h3><i class="fas fa-calendar-check"></i> Exam Schedule</h3>
+                <table class="slip-table">
+                  <thead>
+                    <tr>
+                      <th>SUBJECT NAME</th>
+                      <th>DATE</th>
+                      <th>DAY</th>
+                      <th>TIME</th>
+                      <th>TEACHER NAME</th>
+                    </tr>
+                  </thead>
+                  <tbody id="examTableBody"></tbody>
+                </table>
+              </div>
+
+              <!-- Instructions -->
+              <div class="instructions-section">
+                <h3><i class="fas fa-triangle-exclamation"></i> Important Instructions</h3>
+                <ul class="instructions-list" id="instructionsList">
+                  <li><i class="fas fa-clock"></i> Arrive 15 minutes before the scheduled time.</li>
+                  <li><i class="fas fa-pen"></i> Bring your own stationery.</li>
+                  <li><i class="fas fa-shirt"></i> Wear proper school uniform.</li>
+                  <li><i class="fas fa-ban"></i> Malpractice will lead to strict action.</li>
+                  <li><i class="fas fa-id-card"></i> This slip is compulsory for entry.</li>
+                  <li><i class="fas fa-mobile-screen-button"></i> Mobile phones are strictly prohibited.</li>
+                  <li><i class="fas fa-volume-xmark"></i> Maintain complete silence.</li>
+                  <li><i class="fas fa-chair"></i> Sit at your assigned seat.</li>
+                </ul>
+              </div>
+
+            </div>
+
+            <!-- Footer with Signature (text-based) -->
+            <div class="slip-footer">
+              <div class="footer-left">
+                <div class="issued-on" id="issuedOn">Issued on: —</div>
+              </div>
+              <div class="footer-right">
+                <div class="sig-box">
+                  <div class="sig-label">PRINCIPAL'S SIGNATURE</div>
+                  <div class="sig-line"></div>
+                  <div class="sig-name">(Principal)</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="student-slip.js"></script>
+  <script src="../components.js"></script>
+</body>
+</html>

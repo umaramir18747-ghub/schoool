@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEI – Assign Subjects</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/png" href="../logo2.png">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <!-- Header will be loaded here -->
+  <div id="header-placeholder"></div>
+
+  <div class="app-wrapper" id="appWrapper">
+    
+    <!-- Sidebar will be loaded here -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main Content -->
+<main class="main-panel">
+  <div class="page-header">
+    <h1><i class="fas fa-layer-group" style="color:#2563eb;"></i> Assign Subjects</h1>
+    <p>Manage and assign subjects & teachers to specific classes</p>
+  </div>
+
+  <!-- Class Information -->
+  <div class="card">
+    <div class="card-title">
+      <i class="fas fa-chalkboard"></i> Class Information
+    </div>
+    <div class="form-grid-5cols">
+      <div class="form-group">
+        <label><i class="fas fa-chalkboard-teacher"></i> Class Name <span class="req">*</span></label>
+        <select class="form-control" id="classSelect" required onchange="fillClassDetails()">
+          <option value="">-- Select Class --</option>
+          <option value="Class A">Class A</option>
+          <option value="Class B">Class B</option>
+          <option value="Class C">Class C</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-id-card"></i> Class ID</label>
+        <input type="text" class="form-control" id="s_classId" disabled placeholder="Auto-generated">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-calendar-alt"></i> Session</label>
+        <input type="text" class="form-control" id="s_session" disabled placeholder="Session">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-layer-group"></i> Grade</label>
+        <input type="text" class="form-control" id="s_grade" disabled placeholder="Grade">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-tags"></i> Section</label>
+        <input type="text" class="form-control" id="s_section" disabled placeholder="Section">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <i class="fas fa-book-open"></i> Subject & Teacher Assignment
+    </div>
+    
+    <form id="addSubjectsForm">
+      <div class="subjects-section">
+        <h3><i class="fas fa-book-open"></i> Subjects to Assign</h3>
+        <div id="subjectsContainer"></div>
+        <button type="button" class="btn-add" id="addSubjectBtn">
+          <i class="fas fa-plus"></i> Add Another Subject
+        </button>
+      </div>
+
+      <div class="btn-actions">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Assign Subjects</button>
+        <button type="button" class="btn btn-secondary" id="resetBtn"><i class="fas fa-undo"></i> Reset</button>
+        <a href="view-assign-subjects.html" class="btn btn-secondary" id="viewAssignedBtn"><i class="fas fa-eye"></i> View All Assigned Subjects</a>
+        <a href="index.html" class="btn btn-secondary" id="backDashboardBtn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+      </div>
+    </form>
+  </div>
+</main>
+<script src="../components.js"></script>
+<script>
+    // Load Header and Sidebar
+    function loadComponents() {
+      // Load Header
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+        })
+        .catch(err => console.error('Error loading header:', err));
+
+      // Load Sidebar
+      fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('sidebar-placeholder').innerHTML = data;
+        })
+        .catch(err => console.error('Error loading sidebar:', err));
+    }
+
+    // Initialize everything after components are loaded
+    window.onload = function() {
+      loadComponents();
+      
+      setTimeout(() => {
+        if (typeof window.initHeaderAndSidebar === 'function') {
+          window.initHeaderAndSidebar();
+        }
+      }, 400);
+
+      populateClassDropdown();
+      populateTeacherOptions();
+    };
+
+// ===== Storage Helpers =====
+function loadFromStorage(key) {
+  const stored = localStorage.getItem(key);
+  return stored ? JSON.parse(stored) : [];
+}
+function saveToStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+function showToast(msg) {
+  let t = document.createElement('div');
+  t.className = 'toast-msg';
+  t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2400);
+}
+
+function populateClassDropdown() {
+  const select = document.getElementById('classSelect');
+  const classes = loadFromStorage('messClasses');
+  select.innerHTML = '<option value="">-- Select Class --</option>' +
+    classes.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+}
+
+// Auto-fill Class Details
+function fillClassDetails() {
+  const classId = document.getElementById('classSelect').value;
+  const fields = {
+    s_classId: document.getElementById('s_classId'),
+    s_session: document.getElementById('s_session'),
+    s_grade: document.getElementById('s_grade'),
+    s_section: document.getElementById('s_section')
+  };
+
+  const cls = loadFromStorage('messClasses').find(c => c.id === classId);
+  if (cls) {
+    fields.s_classId.value = cls.id;
+    fields.s_session.value = cls.session;
+    fields.s_grade.value = cls.grade;
+    fields.s_section.value = cls.section;
+  } else {
+    Object.values(fields).forEach(field => field.value = "");
+  }
+}
+
+let teacherOptionsHtml = '<option value="">-- Select Teacher --</option>';
+
+function populateTeacherOptions() {
+  const teachers = loadFromStorage('messTeachers');
+  teacherOptionsHtml = '<option value="">-- Select Teacher --</option>' +
+    teachers.map(t => `<option value="${t.regNo}">${t.teacherName}</option>`).join('');
+  // Refresh any teacher dropdowns already rendered
+  document.querySelectorAll('.teacher-name').forEach(sel => {
+    const current = sel.value;
+    sel.innerHTML = teacherOptionsHtml;
+    sel.value = current;
+  });
+}
+
+function getSubjectRowTemplate(){
+  return `<div class="subject-row">
+    <div class="form-group" style="margin-bottom:0">
+      <label><i class="fas fa-book-open"></i> Subject Name <span class="req">*</span></label>
+      <input type="text" class="form-control subject-name" placeholder="e.g. Mathematics, Physics, English" required>
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label><i class="fas fa-user-tie"></i> Assigned Teacher <span class="req">*</span></label>
+      <select class="form-control teacher-name" required>${teacherOptionsHtml}</select>
+    </div>
+    <button type="button" class="btn-remove" onclick="removeSubjectRow(this)"><i class="fas fa-times"></i></button>
+  </div>`;
+}
+
+const subjectsContainer=document.getElementById('subjectsContainer');
+
+function addSubjectRow(){
+  subjectsContainer.insertAdjacentHTML('beforeend',getSubjectRowTemplate());
+}
+
+function removeSubjectRow(btn){
+  if(subjectsContainer.children.length>1){
+    btn.closest('.subject-row').remove();
+  } else {
+    alert("At least one subject is required!");
+  }
+}
+
+// Initialize one subject row
+subjectsContainer.innerHTML='';
+addSubjectRow();
+
+document.getElementById('addSubjectBtn').addEventListener('click',addSubjectRow);
+
+document.getElementById('addSubjectsForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const classId = document.getElementById('classSelect').value;
+  const cls = loadFromStorage('messClasses').find(c => c.id === classId);
+  if (!cls) {
+    showToast('⚠️ Please select a valid class first');
+    return;
+  }
+
+  const rows = subjectsContainer.querySelectorAll('.subject-row');
+  const newAssignments = [];
+  let valid = true;
+
+  rows.forEach(row => {
+    const subjectName = row.querySelector('.subject-name').value.trim();
+    const teacherSelect = row.querySelector('.teacher-name');
+    const teacherRegNo = teacherSelect.value;
+    const teacherName = teacherSelect.options[teacherSelect.selectedIndex]
+      ? teacherSelect.options[teacherSelect.selectedIndex].textContent
+      : '';
+
+    if (!subjectName || !teacherRegNo) {
+      valid = false;
+      return;
+    }
+
+    newAssignments.push({
+      id: 'SUB-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+      classId: cls.id,
+      className: cls.name,
+      session: cls.session,
+      grade: cls.grade,
+      section: cls.section,
+      subjectName: subjectName,
+      teacherRegNo: teacherRegNo,
+      teacherName: teacherName
+    });
+  });
+
+  if (!valid || newAssignments.length === 0) {
+    showToast('⚠️ Please fill subject name and teacher for every row');
+    return;
+  }
+
+  const subjects = loadFromStorage('messSubjects');
+  // Subjects apply to the whole class automatically (every student in this class inherits them)
+  subjects.push(...newAssignments);
+  saveToStorage('messSubjects', subjects);
+
+  showToast(`✅ ${newAssignments.length} subject(s) assigned to ${cls.name} (applies to all its students)`);
+
+  subjectsContainer.innerHTML = '';
+  addSubjectRow();
+});
+
+window.removeSubjectRow=removeSubjectRow;
+
+document.getElementById('resetBtn').addEventListener('click', function(){
+  document.getElementById('addSubjectsForm').reset();
+  document.getElementById('s_classId').value = '';
+  document.getElementById('s_session').value = '';
+  document.getElementById('s_grade').value = '';
+  document.getElementById('s_section').value = '';
+  subjectsContainer.innerHTML = '';
+  addSubjectRow();
+});
+
+</script>
+</body>
+</html>

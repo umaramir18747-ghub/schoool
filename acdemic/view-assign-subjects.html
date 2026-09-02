@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – Assigned Subjects History</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+  <link rel="stylesheet" href="view-details.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-layer-group" style="color:#2563eb;"></i> Assigned Subjects History</h1>
+        <p>Every subject-teacher assignment made from Assign Subjects, grouped by class</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-book-open"></i> Assigned Subjects
+          <span id="recordCountBadge" style="background:#eff6ff;color:#2563eb;font-size:13px;font-weight:700;padding:3px 11px;margin-left:8px;border:1px solid #dbeafe;">0</span>
+        </div>
+
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search by class, subject or teacher…" oninput="applyFilters()">
+        </div>
+
+        <div id="subjectsContainer"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+  <script>
+    function loadComponents() {
+      fetch('header.html').then(r => r.text()).then(data => document.getElementById('header-placeholder').innerHTML = data);
+      fetch('sidebar.html').then(r => r.text()).then(data => document.getElementById('sidebar-placeholder').innerHTML = data);
+    }
+
+    window.onload = function() {
+      loadComponents();
+      setTimeout(() => { if (typeof window.initHeaderAndSidebar === 'function') window.initHeaderAndSidebar(); }, 400);
+      applyFilters();
+    };
+
+    // ===== Storage Helpers =====
+    function loadFromStorage(key) {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
+    }
+    function saveToStorage(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+    function showToast(msg) {
+      let t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2400);
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      let records = loadFromStorage('messSubjects');
+
+      if (search) {
+        records = records.filter(r =>
+          r.className.toLowerCase().includes(search) ||
+          r.subjectName.toLowerCase().includes(search) ||
+          r.teacherName.toLowerCase().includes(search)
+        );
+      }
+
+      renderGroupedSubjects(records);
+    }
+
+    function renderGroupedSubjects(records) {
+      const container = document.getElementById('subjectsContainer');
+      document.getElementById('recordCountBadge').textContent = records.length;
+
+      if (records.length === 0) {
+        container.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>No subject assignments found.</p></div>`;
+        return;
+      }
+
+      // Group records by classId
+      const grouped = {};
+      records.forEach(r => {
+        if (!grouped[r.classId]) {
+          grouped[r.classId] = {
+            className: r.className,
+            classId: r.classId,
+            grade: r.grade,
+            section: r.section,
+            session: r.session,
+            subjects: []
+          };
+        }
+        grouped[r.classId].subjects.push(r);
+      });
+
+      container.innerHTML = Object.values(grouped).map((group, idx) => `
+        <details class="slip-accordion">
+          <summary>
+            <div class="summary-left">
+              <i class="fas fa-layer-group slip-icon" style="color:#2563eb;"></i>
+              <div>
+                <h3>${group.className} <span style="color:#94a3b8;font-weight:600;">(${group.classId})</span></h3>
+                <span>${group.subjects.length} subject${group.subjects.length > 1 ? 's' : ''} assigned · Grade ${group.grade}, Section ${group.section} · Session ${group.session}</span>
+              </div>
+            </div>
+            <div class="summary-right">
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+          </summary>
+          <div class="table-wrapper">
+            <table class="exam-table">
+              <thead>
+                <tr><th>Subject</th><th>Teacher</th><th style="text-align:right">Action</th></tr>
+              </thead>
+              <tbody>
+                ${group.subjects.map((sub, subIdx) => `
+                  <tr>
+                    <td><strong>${sub.subjectName}</strong></td>
+                    <td>${sub.teacherName}</td>
+                    <td style="text-align:right">
+                      <i class="fas fa-trash-alt exam-delete-icon" data-classid="${group.classId}" data-subjectindex="${subIdx}" title="Delete this subject assignment"></i>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      `).join('');
+
+      // Delete single subject
+      document.querySelectorAll('.exam-delete-icon').forEach(icon => {
+        icon.addEventListener('click', () => {
+          deleteSingleSubject(icon.dataset.classid, parseInt(icon.dataset.subjectindex, 10));
+        });
+      });
+    }
+
+    function deleteSingleSubject(classId, subjectIndex) {
+      const records = loadFromStorage('messSubjects');
+      const classSubjects = records.filter(r => r.classId === classId);
+      if (classSubjects.length === 0 || subjectIndex >= classSubjects.length) return;
+
+      const subject = classSubjects[subjectIndex];
+      if (!confirm(`Remove "${subject.subjectName}" (${subject.teacherName}) from ${subject.className}?`)) return;
+
+      // Find the actual record to delete by matching subjectName and teacherName
+      const updated = records.filter(r => 
+        !(r.classId === classId && 
+          r.subjectName === subject.subjectName && 
+          r.teacherName === subject.teacherName)
+      );
+      
+      saveToStorage('messSubjects', updated);
+      showToast('🗑️ Subject assignment removed');
+      applyFilters();
+    }
+  </script>
+</body>
+</html>
