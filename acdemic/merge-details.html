@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>MEI – View Student Merges | Make-Up Classes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <!-- Header will be loaded here -->
+  <div id="header-placeholder"></div>
+
+  <div class="app-wrapper" id="appWrapper">
+    <!-- Sidebar will be loaded here -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main Content -->
+    <div class="app-container">
+      <main class="main-panel">
+        <div class="page-header">
+          <h1><i class="fas fa-code-branch"></i> Student Merges to Make-Up Classes</h1>
+          <p>View all students merged into make-up classes and manage their assignments.</p>
+        </div>
+
+        <div class="data-card">
+          <div class="card-header">
+            <h2><i class="fas fa-table-list"></i> All Student Merges <span class="badge-count" id="mergeCountBadge">0</span></h2>
+            <div class="search-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="mergeSearchInput" placeholder="Search by student name, reg no, or class..." class="search-input">
+              <button class="search-clear-btn" id="clearSearchBtn" style="display: none;"><i class="fas fa-times-circle"></i></button>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Reg No.</th>
+                  <th>Make-Up Class</th>
+                  <th>Class ID</th>
+                  <th>Grade</th>
+                  <th>Merge Date</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="mergeTableBody"></tbody>
+            </table>
+          </div>
+
+          <!-- No results message -->
+          <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px 20px; color: #64748b;">
+            <i class="fas fa-search" style="font-size: 32px; display: block; margin-bottom: 12px; color: #94a3b8;"></i>
+            <p style="font-size: 16px; font-weight: 500; color: #1e293b;">No student merges found</p>
+            <p style="font-size: 14px;">Start by merging students from the Merge Classes page</p>
+          </div>
+        </div>
+
+        <!-- Statistics Summary -->
+        <div class="data-card" style="margin-top: 30px;">
+          <div class="card-header">
+            <h2><i class="fas fa-chart-bar"></i> Merge Statistics</h2>
+          </div>
+          <div style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            <div style="padding: 20px; background: #dbeafe; border-radius: 8px; border-left: 4px solid #2563eb;">
+              <div style="font-size: 14px; color: #1e293b; font-weight: 600;">Total Merges</div>
+              <div style="font-size: 28px; color: #2563eb; font-weight: 700; margin-top: 8px;" id="totalMerges">0</div>
+            </div>
+            <div style="padding: 20px; background: #dcfce7; border-radius: 8px; border-left: 4px solid #16a34a;">
+              <div style="font-size: 14px; color: #1e293b; font-weight: 600;">Unique Students</div>
+              <div style="font-size: 28px; color: #16a34a; font-weight: 700; margin-top: 8px;" id="uniqueStudents">0</div>
+            </div>
+            <div style="padding: 20px; background: #fce7f3; border-radius: 8px; border-left: 4px solid #ec4899;">
+              <div style="font-size: 14px; color: #1e293b; font-weight: 600;">Make-Up Classes</div>
+              <div style="font-size: 28px; color: #ec4899; font-weight: 700; margin-top: 8px;" id="uniqueClasses">0</div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL for merge detail view -->
+  <div id="mergeModalOverlay" class="modal-overlay">
+    <div class="class-modal-container">
+      <div class="modal-header-custom">
+        <h2 id="modalMergeTitle"><i class="fas fa-user-graduate"></i> Student Merge Details</h2>
+        <button class="close-modal-btn" id="closeModalBtn"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="mergeModalDynamicContent"></div>
+      <div class="modal-footer-custom">
+        <button id="modalFooterCloseBtn" style="background:#f1f5f9; border:1px solid #cbd5e1; padding: 8px 20px; font-weight:600; cursor:pointer;"><i class="fas fa-times"></i> Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../components.js"></script>
+  <script>
+    // Load Header and Sidebar
+    function loadComponents() {
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header-placeholder').innerHTML = data)
+        .catch(err => console.error('Error loading header:', err));
+
+      fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('sidebar-placeholder').innerHTML = data)
+        .catch(err => console.error('Error loading sidebar:', err));
+    }
+
+    window.onload = function() {
+      loadComponents();
+      setTimeout(() => {
+        if (typeof window.initHeaderAndSidebar === 'function') {
+          window.initHeaderAndSidebar();
+        }
+      }, 400);
+    };
+
+    // ===== Storage Helpers =====
+    function loadFromStorage(key) {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveToStorage(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    // Build merged students view model with original student info
+    function buildMergedStudentsViewModel() {
+      const mergedStudents = loadFromStorage('messMakeupStudents');
+      const allStudents = loadFromStorage('messStudents');
+      const makeupClasses = loadFromStorage('messMakeupClasses');
+
+      return mergedStudents.map(ms => {
+        const originalStudent = allStudents.find(s => s.regNo === ms.studentRegNo);
+        const makeupClass = makeupClasses.find(c => c.id === ms.makeupClassId);
+        return {
+          ...ms,
+          studentName: originalStudent?.studentName || ms.studentName,
+          fatherName: originalStudent?.fatherName || '',
+          makeupClassName: makeupClass?.name || ms.makeupClassName,
+          makeupClassGrade: makeupClass?.grade || '',
+          photoUrl: originalStudent?.photoUrl || null
+        };
+      });
+    }
+
+    let mergedData = buildMergedStudentsViewModel();
+    let filteredMerges = [...mergedData];
+
+    function showToast(msg) {
+      let t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2200);
+    }
+
+    function updateMergeCount() {
+      document.getElementById('mergeCountBadge').innerText = filteredMerges.length;
+    }
+
+    function updateStatistics() {
+      const totalMerges = mergedData.length;
+      const uniqueStudents = new Set(mergedData.map(m => m.studentRegNo)).size;
+      const uniqueClasses = new Set(mergedData.map(m => m.makeupClassId)).size;
+
+      document.getElementById('totalMerges').textContent = totalMerges;
+      document.getElementById('uniqueStudents').textContent = uniqueStudents;
+      document.getElementById('uniqueClasses').textContent = uniqueClasses;
+    }
+
+    function renderMergeTable(dataToRender = filteredMerges) {
+      const tbody = document.getElementById('mergeTableBody');
+      const noResults = document.getElementById('noResultsMessage');
+      if (!tbody) return;
+      
+      if (dataToRender.length === 0) {
+        tbody.innerHTML = '';
+        noResults.style.display = 'block';
+        document.getElementById('mergeCountBadge').innerText = '0';
+        return;
+      }
+      
+      noResults.style.display = 'none';
+      
+      tbody.innerHTML = dataToRender.map(m => {
+        return `
+          <tr>
+            <td><strong>${escapeHtml(m.studentName)}</strong></td>
+            <td>${escapeHtml(m.studentRegNo)}</td>
+            <td>${escapeHtml(m.makeupClassName)}</td>
+            <td>${escapeHtml(m.makeupClassId)}</td>
+            <td>${escapeHtml(m.makeupClassGrade)}</td>
+            <td><small>${escapeHtml(m.mergeDate)}</small></td>
+            <td style="text-align: right">
+              <div class="action-icons">
+                <i class="fas fa-eye view-icon" data-mergeid="${m.id}" title="View Details"></i>
+                <i class="fas fa-trash-alt delete-icon" data-mergeid="${m.id}" title="Remove Merge"></i>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Attach event listeners
+      document.querySelectorAll('.view-icon').forEach(icon => {
+        icon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openMergeDetailPanel(icon.dataset.mergeid);
+        });
+      });
+      document.querySelectorAll('.delete-icon').forEach(icon => {
+        icon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteMergeById(icon.dataset.mergeid);
+        });
+      });
+      
+      updateMergeCount();
+    }
+
+    // SEARCH FUNCTIONALITY
+    function filterMerges(searchTerm) {
+      const term = searchTerm.toLowerCase().trim();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      
+      if (!term) {
+        filteredMerges = [...mergedData];
+        clearBtn.style.display = 'none';
+      } else {
+        filteredMerges = mergedData.filter(m => 
+          m.studentName.toLowerCase().includes(term) || 
+          m.studentRegNo.toLowerCase().includes(term) ||
+          m.makeupClassName.toLowerCase().includes(term) ||
+          m.makeupClassId.toLowerCase().includes(term)
+        );
+        clearBtn.style.display = 'block';
+      }
+      
+      renderMergeTable(filteredMerges);
+    }
+
+    // Setup search event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('mergeSearchInput');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          filterMerges(this.value);
+        });
+        
+        searchInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            this.value = '';
+            filterMerges('');
+            this.blur();
+          }
+        });
+      }
+      
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          if (searchInput) {
+            searchInput.value = '';
+            filterMerges('');
+            searchInput.focus();
+          }
+        });
+      }
+    });
+
+    function deleteMergeById(mergeId) {
+      if (confirm(`⚠️ Remove this student merge? This action cannot be undone.`)) {
+        mergedData = mergedData.filter(m => m.id !== mergeId);
+        const stripped = mergedData.map(({ photoUrl, ...rest }) => rest);
+        saveToStorage('messMakeupStudents', stripped);
+        
+        const searchInput = document.getElementById('mergeSearchInput');
+        filterMerges(searchInput ? searchInput.value : '');
+        updateStatistics();
+        showToast(`🗑️ Student merge removed`);
+      }
+    }
+
+    function escapeHtml(str) { 
+      if (!str) return ''; 
+      return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); 
+    }
+
+    function openMergeDetailPanel(mergeId) {
+      const merge = mergedData.find(m => m.id === mergeId);
+      if (!merge) return;
+
+      const photoHtml = merge.photoUrl ? `<img src="${merge.photoUrl}" style="width:120px; height:120px; border-radius:8px; object-fit:cover;" alt="student">` : `<div style="width:120px; height:120px; background:#e2e8f0; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i class="fas fa-user-graduate" style="font-size:48px; color:#94a3b8;"></i></div>`;
+
+      const modalContent = `
+        <div style="padding: 0;">
+          <div style="display: flex; gap: 20px; padding: 20px 28px; border-bottom: 1px solid #eef2f8;">
+            <div>${photoHtml}</div>
+            <div style="flex: 1;">
+              <h3 style="margin: 0; color: #1e293b; font-size: 18px;">${escapeHtml(merge.studentName)}</h3>
+              <div style="color: #64748b; font-size: 14px; margin-top: 4px;">Reg No: <strong>${escapeHtml(merge.studentRegNo)}</strong></div>
+              <div style="color: #64748b; font-size: 14px; margin-top: 4px;">Father: ${escapeHtml(merge.fatherName || '—')}</div>
+            </div>
+          </div>
+
+          <div style="padding: 20px 28px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: #1e293b; margin: 0 0 15px 0;"><i class="fas fa-calendar-plus"></i> Make-Up Class Assignment</h4>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <div style="font-size: 12px; color: #64748b; font-weight: 600;">Class Name</div>
+                  <div style="font-size: 16px; color: #1e293b; font-weight: 700; margin-top: 4px;">${escapeHtml(merge.makeupClassName)}</div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: #64748b; font-weight: 600;">Class ID</div>
+                  <div style="font-size: 16px; color: #1e293b; font-weight: 700; margin-top: 4px;">${escapeHtml(merge.makeupClassId)}</div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: #64748b; font-weight: 600;">Grade</div>
+                  <div style="font-size: 16px; color: #1e293b; font-weight: 700; margin-top: 4px;">${escapeHtml(merge.makeupClassGrade)}</div>
+                </div>
+                <div>
+                  <div style="font-size: 12px; color: #64748b; font-weight: 600;">Merge Date</div>
+                  <div style="font-size: 14px; color: #1e293b; margin-top: 4px;">${escapeHtml(merge.mergeDate)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding: 0 28px 20px 28px; border-top: 1px solid #eef2f8; margin-top: 20px;">
+            <p style="font-size: 13px; color: #64748b; margin: 0; padding-top: 15px;">
+              <i class="fas fa-info-circle"></i> This student is now part of the make-up class and will receive subject assignments specific to this class only.
+            </p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('mergeModalDynamicContent').innerHTML = modalContent;
+      document.getElementById('modalMergeTitle').innerHTML = `<i class="fas fa-user-graduate"></i> ${escapeHtml(merge.studentName)} — Merge Details`;
+      document.getElementById('mergeModalOverlay').classList.add('active');
+    }
+
+    function closeMergeModal() {
+      document.getElementById('mergeModalOverlay').classList.remove('active');
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', closeMergeModal);
+    document.getElementById('modalFooterCloseBtn').addEventListener('click', closeMergeModal);
+    document.getElementById('mergeModalOverlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('mergeModalOverlay')) closeMergeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('mergeModalOverlay').classList.contains('active')) closeMergeModal();
+    });
+
+    // Initial render
+    filteredMerges = [...mergedData];
+    renderMergeTable();
+    updateStatistics();
+  </script>
+</body>
+</html>

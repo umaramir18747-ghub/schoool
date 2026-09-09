@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – Merge Students to Make-Up Class</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+  <style>
+    .student-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .student-selection-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .student-selection-card:hover {
+      border-color: #2563eb;
+      background: #f0f7ff;
+    }
+
+    .student-selection-card.selected {
+      border-color: #2563eb;
+      background: #dbeafe;
+    }
+
+    .student-checkbox {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .student-info {
+      padding-right: 30px;
+    }
+
+    .student-name-select {
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 5px;
+    }
+
+    .student-id-select {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 3px;
+    }
+
+    .student-father-select {
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .selection-stats {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .selection-stats-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .selection-stats-item strong {
+      color: #2563eb;
+      font-size: 18px;
+    }
+
+    .bulk-actions {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .bulk-actions button {
+      padding: 8px 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #f8fafc;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .bulk-actions button:hover {
+      background: #e2e8f0;
+    }
+
+    /* Section badge in dropdown */
+    .makeup-option-section {
+      font-size: 11px;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header will be loaded here -->
+  <div id="header-placeholder"></div>
+
+  <div class="app-wrapper" id="appWrapper">
+    <!-- Sidebar will be loaded here -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-code-branch" style="color:#2563eb;"></i> Merge Students to Make-Up Class</h1>
+        <p>Select students from a regular class and merge them into a make-up class</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-layer-group"></i> Class Selection
+        </div>
+        
+        <form id="mergeForm">
+          <!-- Original Class Selection -->
+          <div class="section-title"><i class="fas fa-school"></i> Select Source Class</div>
+          <div class="form-grid-5cols">
+            <div class="form-group">
+              <label><i class="fas fa-chalkboard-teacher"></i> Regular Class <span class="req">*</span></label>
+              <select class="form-control" id="classSelect" required onchange="loadClassStudents()">
+                <option value="">-- Select Regular Class --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-id-card"></i> Class ID</label>
+              <input type="text" class="form-control" id="s_classId" disabled>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-calendar-alt"></i> Session</label>
+              <input type="text" class="form-control" id="s_session" disabled>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-layer-group"></i> Grade</label>
+              <input type="text" class="form-control" id="s_grade" disabled>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-tags"></i> Section</label>
+              <input type="text" class="form-control" id="s_section" disabled>
+            </div>
+          </div>
+
+          <!-- Students Selection Section -->
+          <div id="studentsSelectionSection" style="display:none;">
+            <div class="section-title"><i class="fas fa-users"></i> Select Students to Merge</div>
+            
+            <div class="selection-stats">
+              <div class="selection-stats-item">
+                <i class="fas fa-user-friends"></i>
+                <span>Total Students: <strong id="totalStudents">0</strong></span>
+              </div>
+              <div class="selection-stats-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Selected: <strong id="selectedCount">0</strong></span>
+              </div>
+            </div>
+
+            <div class="bulk-actions">
+              <button type="button" onclick="selectAllStudents()" class="btn-small">
+                <i class="fas fa-check-double"></i> Select All
+              </button>
+              <button type="button" onclick="deselectAllStudents()" class="btn-small">
+                <i class="fas fa-times-circle"></i> Deselect All
+              </button>
+            </div>
+
+            <div class="student-selection-grid" id="studentsList"></div>
+          </div>
+
+          <!-- Make-Up Class Selection -->
+          <div class="section-title" style="margin-top: 30px;"><i class="fas fa-calendar-plus"></i> Select Destination Make-Up Class</div>
+          <div class="form-grid-5cols">
+            <div class="form-group">
+              <label><i class="fas fa-chalkboard-teacher"></i> Make-Up Class <span class="req">*</span></label>
+              <select class="form-control" id="makeupClassSelect" required onchange="fillMakeupClassDetails()">
+                <option value="">-- Select Make-Up Class --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-id-card"></i> Class ID</label>
+              <input type="text" class="form-control" id="m_classId" disabled>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-calendar-alt"></i> Session</label>
+              <input type="text" class="form-control" id="m_session" disabled>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-layer-group"></i> Grade</label>
+              <input type="text" class="form-control" id="m_grade" disabled>
+            </div>
+            <!-- REPLACED: description with section -->
+            <div class="form-group">
+              <label><i class="fas fa-tags"></i> Section</label>
+              <input type="text" class="form-control" id="m_section" disabled>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="btn-actions">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-code-branch"></i> Merge Selected Students</button>
+            <button type="button" class="btn btn-secondary" onclick="resetForm()"><i class="fas fa-undo"></i> Reset</button>
+            <a href="merge-details.html" class="btn btn-secondary"><i class="fas fa-eye"></i> View Merges</a>
+            <a href="index.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+  <script>
+    // Load Header and Sidebar
+    function loadComponents() {
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header-placeholder').innerHTML = data)
+        .catch(err => console.error('Error loading header:', err));
+
+      fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('sidebar-placeholder').innerHTML = data)
+        .catch(err => console.error('Error loading sidebar:', err));
+    }
+
+    window.onload = function() {
+      loadComponents();
+      
+      setTimeout(() => {
+        if (typeof window.initHeaderAndSidebar === 'function') {
+          window.initHeaderAndSidebar();
+        }
+      }, 400);
+
+      populateClassDropdowns();
+    };
+
+    // ===== Storage Helpers =====
+    function loadFromStorage(key) {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveToStorage(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    function showToast(msg) {
+      let t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2400);
+    }
+
+    let selectedStudents = [];
+
+    function populateClassDropdowns() {
+      // Populate regular classes
+      const regularClasses = loadFromStorage('messClasses');
+      const classSelect = document.getElementById('classSelect');
+      classSelect.innerHTML = '<option value="">-- Select Regular Class --</option>' +
+        regularClasses.map(c => `<option value="${c.id}">${c.name} (${c.grade}${c.section !== '—' ? ' - ' + c.section : ''})</option>`).join('');
+
+      // Populate makeup classes with section info
+      const makeupClasses = loadFromStorage('messMakeupClasses');
+      const makeupSelect = document.getElementById('makeupClassSelect');
+      makeupSelect.innerHTML = '<option value="">-- Select Make-Up Class --</option>' +
+        makeupClasses.map(c => {
+          const sectionDisplay = c.section ? ` <span class="makeup-option-section">Section: ${c.section}</span>` : '';
+          return `<option value="${c.id}">${c.name} (${c.grade})${sectionDisplay}</option>`;
+        }).join('');
+    }
+
+    function loadClassStudents() {
+      const classId = document.getElementById('classSelect').value;
+      if (!classId) {
+        document.getElementById('studentsSelectionSection').style.display = 'none';
+        return;
+      }
+
+      const regularClasses = loadFromStorage('messClasses');
+      const cls = regularClasses.find(c => c.id === classId);
+
+      if (cls) {
+        document.getElementById('s_classId').value = cls.id;
+        document.getElementById('s_session').value = cls.session;
+        document.getElementById('s_grade').value = cls.grade;
+        document.getElementById('s_section').value = cls.section;
+      }
+
+      const allStudents = loadFromStorage('messStudents');
+      const classStudents = allStudents.filter(s => s.classId === classId);
+
+      document.getElementById('totalStudents').textContent = classStudents.length;
+      selectedStudents = [];
+      updateSelectedCount();
+
+      // Render student selection cards
+      const studentsList = document.getElementById('studentsList');
+      studentsList.innerHTML = classStudents.map((student, index) => `
+        <div class="student-selection-card" onclick="toggleStudentSelection(${index}, '${student.regNo}', this)">
+          <input type="checkbox" class="student-checkbox" data-index="${index}" data-regno="${student.regNo}">
+          <div class="student-info">
+            <div class="student-name-select">${escapeHtml(student.studentName)}</div>
+            <div class="student-id-select">${escapeHtml(student.regNo)}</div>
+            <div class="student-father-select">${escapeHtml(student.fatherName || '—')}</div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('studentsSelectionSection').style.display = 'block';
+    }
+
+    function toggleStudentSelection(index, regNo, cardElement) {
+      const checkbox = cardElement.querySelector('.student-checkbox');
+      checkbox.checked = !checkbox.checked;
+
+      if (checkbox.checked) {
+        if (!selectedStudents.find(s => s.regNo === regNo)) {
+          const allStudents = loadFromStorage('messStudents');
+          const student = allStudents.find(s => s.regNo === regNo);
+          if (student) {
+            selectedStudents.push({ regNo: student.regNo, name: student.studentName });
+          }
+        }
+        cardElement.classList.add('selected');
+      } else {
+        selectedStudents = selectedStudents.filter(s => s.regNo !== regNo);
+        cardElement.classList.remove('selected');
+      }
+
+      updateSelectedCount();
+    }
+
+    function selectAllStudents() {
+      const classId = document.getElementById('classSelect').value;
+      if (!classId) {
+        showToast('⚠️ Please select a class first');
+        return;
+      }
+
+      const allStudents = loadFromStorage('messStudents');
+      const classStudents = allStudents.filter(s => s.classId === classId);
+
+      selectedStudents = classStudents.map(s => ({ regNo: s.regNo, name: s.studentName }));
+
+      document.querySelectorAll('.student-selection-card').forEach(card => {
+        card.classList.add('selected');
+        card.querySelector('.student-checkbox').checked = true;
+      });
+
+      updateSelectedCount();
+      showToast(`✅ All ${classStudents.length} students selected`);
+    }
+
+    function deselectAllStudents() {
+      selectedStudents = [];
+      document.querySelectorAll('.student-selection-card').forEach(card => {
+        card.classList.remove('selected');
+        card.querySelector('.student-checkbox').checked = false;
+      });
+      updateSelectedCount();
+      showToast('✅ All students deselected');
+    }
+
+    function updateSelectedCount() {
+      document.getElementById('selectedCount').textContent = selectedStudents.length;
+    }
+
+    function fillMakeupClassDetails() {
+      const makeupClassId = document.getElementById('makeupClassSelect').value;
+      const makeupClasses = loadFromStorage('messMakeupClasses');
+      const makeup = makeupClasses.find(c => c.id === makeupClassId);
+
+      if (makeup) {
+        document.getElementById('m_classId').value = makeup.id;
+        document.getElementById('m_session').value = makeup.session;
+        document.getElementById('m_grade').value = makeup.grade;
+        document.getElementById('m_section').value = makeup.section || '—';  // UPDATED: Show section
+      } else {
+        document.getElementById('m_classId').value = '';
+        document.getElementById('m_session').value = '';
+        document.getElementById('m_grade').value = '';
+        document.getElementById('m_section').value = '';
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+    }
+
+    function resetForm() {
+      document.getElementById('mergeForm').reset();
+      document.getElementById('studentsSelectionSection').style.display = 'none';
+      selectedStudents = [];
+      updateSelectedCount();
+      document.getElementById('s_classId').value = '';
+      document.getElementById('s_session').value = '';
+      document.getElementById('s_grade').value = '';
+      document.getElementById('s_section').value = '';
+      document.getElementById('m_classId').value = '';
+      document.getElementById('m_session').value = '';
+      document.getElementById('m_grade').value = '';
+      document.getElementById('m_section').value = '';
+    }
+
+    // Form Submit
+    document.getElementById('mergeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const makeupClassId = document.getElementById('makeupClassSelect').value;
+      if (!makeupClassId) {
+        showToast('⚠️ Please select a make-up class');
+        return;
+      }
+
+      if (selectedStudents.length === 0) {
+        showToast('⚠️ Please select at least one student');
+        return;
+      }
+
+      const makeupClasses = loadFromStorage('messMakeupClasses');
+      const makeupClass = makeupClasses.find(c => c.id === makeupClassId);
+      if (!makeupClass) {
+        showToast('⚠️ Make-up class not found');
+        return;
+      }
+
+      const mergedStudents = loadFromStorage('messMakeupStudents');
+
+      selectedStudents.forEach(student => {
+        // Check if student already merged into this makeup class
+        if (!mergedStudents.find(ms => ms.makeupClassId === makeupClassId && ms.studentRegNo === student.regNo)) {
+          mergedStudents.push({
+            id: 'MRG-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            makeupClassId: makeupClassId,
+            makeupClassName: makeupClass.name,
+            studentRegNo: student.regNo,
+            studentName: student.name,
+            mergeDate: new Date().toLocaleString()
+          });
+        }
+      });
+
+      saveToStorage('messMakeupStudents', mergedStudents);
+      showToast(`✅ ${selectedStudents.length} student(s) merged into ${makeupClass.name}`);
+      resetForm();
+    });
+  </script>
+</body>
+</html>

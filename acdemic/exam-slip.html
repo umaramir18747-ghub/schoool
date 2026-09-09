@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – Manage Exam Slip</title>
+  <link rel="icon" type="image/png" href="logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <!-- Header will be loaded here -->
+  <div id="header-placeholder"></div>
+
+  <div class="app-wrapper" id="appWrapper">
+    <!-- Sidebar will be loaded here -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-file-alt" style="color:#2563eb;"></i> Manage Exam Slip</h1>
+        <p>Assign exam schedule to specific classes</p>
+      </div>
+
+      <!-- Class Information -->
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-chalkboard"></i> Class Information
+        </div>
+        <div class="form-grid-5cols">
+          <div class="form-group">
+            <label><i class="fas fa-chalkboard-teacher"></i> Class Name <span class="req">*</span></label>
+            <select class="form-control" id="classSelect" required onchange="fillClassDetails()">
+              <option value="">-- Select Class --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-id-card"></i> Class ID</label>
+            <input type="text" class="form-control" id="exam_classId" disabled placeholder="Auto-generated">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-calendar-alt"></i> Session</label>
+            <input type="text" class="form-control" id="exam_session" disabled placeholder="Session">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-layer-group"></i> Grade</label>
+            <input type="text" class="form-control" id="exam_grade" disabled placeholder="Grade">
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-tags"></i> Section</label>
+            <input type="text" class="form-control" id="exam_section" disabled placeholder="Section">
+          </div>
+        </div>
+        
+        <!-- Exam Type & Issue Date Section -->
+        <div class="exam-type-section" style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e2e8f0; display: flex; gap: 20px; flex-wrap: wrap;">
+          <div class="form-group" style="flex: 1; min-width: 250px;">
+            <label><i class="fas fa-file-signature"></i> Exam Type <span class="req">*</span></label>
+            <select class="form-control" id="examTypeSelect" required>
+              <option value="">-- Select Exam Type --</option>
+              <option value="Mid Term">Mid Term</option>
+              <option value="Final Term">Final Term</option>
+              <option value="Weekly Test">Weekly Test</option>
+              <option value="Monthly Test">Monthly Test</option>
+              <option value="Quarterly Exam">Quarterly Exam</option>
+              <option value="Half Yearly">Half Yearly</option>
+              <option value="Annual Exam">Annual Exam</option>
+              <option value="Pre-Board">Pre-Board</option>
+              <option value="Board Exam">Board Exam</option>
+            </select>
+          </div>
+
+          <!-- Slip Issue Date set by Admin -->
+          <div class="form-group" style="flex: 1; min-width: 250px;">
+            <label><i class="fas fa-calendar-day"></i> Slip Issue Date <span class="req">*</span></label>
+            <input type="date" class="form-control" id="examIssueDate" required style="border-color: #2563eb; background: #eff6ff;">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-calendar-check"></i> Exam Schedule Assignment
+        </div>
+        <div class="exam-section">
+          <h3><i class="fas fa-clock"></i> Exam Details</h3>
+          <div id="examRowsContainer"></div>
+          <button type="button" class="btn-add" id="addExamRowBtn"><i class="fas fa-plus"></i> Add Another Exam Entry</button>
+        </div>
+
+        <div class="btn-actions">
+          <button class="btn btn-primary" id="generateExamBtn"><i class="fas fa-save"></i> Generate & Assign Exam Slip</button>
+          <button type="button" class="btn btn-secondary" id="resetExamFormBtn"><i class="fas fa-undo"></i> Reset</button>
+          <a href="view-exam-slip.html" class="btn btn-secondary" id="viewExamSlipsBtn"><i class="fas fa-eye"></i> View All Exam Slips</a>
+          <a href="student-slip.html" class="btn btn-secondary" id="openStudentSlipBtn"><i class="fas fa-user-graduate"></i> View Student Slip</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+  <script>
+    // Load Header and Sidebar
+    function loadComponents() {
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+          const el = document.getElementById('header-placeholder');
+          if (el) el.innerHTML = data;
+        })
+        .catch(err => console.log('Notice: Running in standalone mode'));
+
+      fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          const el = document.getElementById('sidebar-placeholder');
+          if (el) el.innerHTML = data;
+        })
+        .catch(err => console.log('Notice: Running in standalone mode'));
+    }
+
+    window.onload = function() {
+      loadComponents();
+      setTimeout(() => {
+        if (typeof window.initHeaderAndSidebar === 'function') {
+          window.initHeaderAndSidebar();
+        }
+      }, 400);
+
+      // Default issue date to today
+      const issueInput = document.getElementById('examIssueDate');
+      if (issueInput && !issueInput.value) {
+        issueInput.value = new Date().toISOString().split('T')[0];
+      }
+
+      populateClassDropdown();
+      initializeExamRows();
+    };
+
+    // ===== Storage Helpers =====
+    function loadFromStorage(key) {
+      try {
+        const stored = localStorage.getItem(key);
+        return stored ? JSON.parse(stored) : [];
+      } catch(e) { return []; }
+    }
+    function saveToStorage(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch(e) { console.error(e); }
+    }
+    function showToast(msg) {
+      let t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2600);
+    }
+
+    function populateClassDropdown() {
+      const select = document.getElementById('classSelect');
+      const classes = loadFromStorage('messClasses');
+      if (classes && classes.length > 0) {
+        select.innerHTML = '<option value="">-- Select Class --</option>' +
+          classes.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+      } else {
+        select.innerHTML = '<option value="">-- No classes found --</option>';
+      }
+    }
+
+    // Auto-fill Class Details & load existing date if available
+    function fillClassDetails() {
+      const classId = document.getElementById('classSelect').value;
+      const classIdField = document.getElementById('exam_classId');
+      const sessionField = document.getElementById('exam_session');
+      const gradeField = document.getElementById('exam_grade');
+      const sectionField = document.getElementById('exam_section');
+      const issueDateField = document.getElementById('examIssueDate');
+
+      if (!classId) {
+        classIdField.value = "";
+        sessionField.value = "";
+        gradeField.value = "";
+        sectionField.value = "";
+        return;
+      }
+
+      const cls = loadFromStorage('messClasses').find(c => c.id === classId);
+      if (cls) {
+        classIdField.value = cls.id;
+        sessionField.value = cls.session || '';
+        gradeField.value = cls.grade || '';
+        sectionField.value = cls.section || '';
+
+        // Auto populate existing slip data if present
+        const examSlips = loadFromStorage('messExamSlips');
+        const existing = examSlips.find(s => s.classId === cls.id);
+        if (existing) {
+          if (existing.examType) document.getElementById('examTypeSelect').value = existing.examType;
+          if (existing.issueDate && issueDateField) issueDateField.value = existing.issueDate;
+          
+          // Load existing exam rows
+          if (existing.exams && existing.exams.length > 0) {
+            const container = document.getElementById('examRowsContainer');
+            container.innerHTML = '';
+            existing.exams.forEach(exam => {
+              addRowWithData(exam);
+            });
+            return;
+          }
+        }
+      } else {
+        classIdField.value = "";
+        sessionField.value = "";
+        gradeField.value = "";
+        sectionField.value = "";
+      }
+
+      // Reset rows to one empty row if no existing data
+      const container = document.getElementById('examRowsContainer');
+      container.innerHTML = '';
+      addRow();
+    }
+
+    const dayOptions = `<option value="">-- Select Day --</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>`;
+
+    function getExamRowTemplate(data) {
+      const subject = data?.subject || '';
+      const date = data?.date || '';
+      const day = data?.day || '';
+      const time = data?.time || '';
+      const teacher = data?.teacher || '';
+      
+      return `<div class="exam-row">
+        <div class="form-group">
+          <label><i class="fas fa-book"></i> Subject Name <span class="req">*</span></label>
+          <input type="text" class="form-control exam-subject" placeholder="e.g. Mathematics" required value="${subject}">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-calendar-day"></i> Date <span class="req">*</span></label>
+          <input type="date" class="form-control exam-date" required value="${date}">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-sun"></i> Day <span class="req">*</span></label>
+          <select class="form-control exam-day" required>
+            ${dayOptions}
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-hourglass-half"></i> Time <span class="req">*</span></label>
+          <input type="time" class="form-control exam-time" required value="${time}">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-user-tie"></i> Teacher Name <span class="req">*</span></label>
+          <input type="text" class="form-control exam-teacher" placeholder="e.g. Prof. Johnson" required value="${teacher}">
+        </div>
+        <button type="button" class="btn-remove"><i class="fas fa-times"></i></button>
+      </div>`;
+    }
+
+    const container = document.getElementById('examRowsContainer');
+    const addBtn = document.getElementById('addExamRowBtn');
+
+    function addRow() {
+      container.insertAdjacentHTML('beforeend', getExamRowTemplate());
+      // Set default day to Monday for new rows
+      const lastRow = container.lastElementChild;
+      const daySelect = lastRow.querySelector('.exam-day');
+      if (daySelect) {
+        daySelect.value = 'Monday';
+      }
+    }
+
+    function addRowWithData(data) {
+      container.insertAdjacentHTML('beforeend', getExamRowTemplate(data));
+      // Set the day value properly
+      const lastRow = container.lastElementChild;
+      const daySelect = lastRow.querySelector('.exam-day');
+      if (daySelect && data?.day) {
+        daySelect.value = data.day;
+      }
+    }
+
+    function removeRow(btn) {
+      if (container.children.length > 1) {
+        btn.closest('.exam-row').remove();
+      } else {
+        showToast('⚠️ At least one exam entry is required!');
+      }
+    }
+
+    // Event delegation for remove buttons
+    container.addEventListener('click', e => {
+      if (e.target.closest('.btn-remove')) {
+        removeRow(e.target.closest('.btn-remove'));
+      }
+    });
+
+    addBtn.addEventListener('click', addRow);
+
+    function initializeExamRows() {
+      container.innerHTML = '';
+      addRow();
+    }
+
+    document.getElementById('generateExamBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const classId = document.getElementById('classSelect').value;
+      if (!classId) {
+        showToast('⚠️ Please select a class first');
+        return;
+      }
+
+      const cls = loadFromStorage('messClasses').find(c => c.id === classId);
+      if (!cls) {
+        showToast('⚠️ Class not found');
+        return;
+      }
+
+      // Get Exam Type
+      const examType = document.getElementById('examTypeSelect').value;
+      if (!examType) {
+        showToast('⚠️ Please select an Exam Type');
+        return;
+      }
+
+      // ISSUE DATE FIELD SET BY ADMIN
+      const issueDate = document.getElementById('examIssueDate').value;
+      if (!issueDate) {
+        showToast('⚠️ Please select an Issue Date');
+        return;
+      }
+
+      const rows = container.querySelectorAll('.exam-row');
+      const exams = [];
+      let valid = true;
+
+      rows.forEach(row => {
+        const subject = row.querySelector('.exam-subject').value.trim();
+        const date = row.querySelector('.exam-date').value;
+        const day = row.querySelector('.exam-day').value;
+        const time = row.querySelector('.exam-time').value;
+        const teacher = row.querySelector('.exam-teacher').value.trim();
+
+        if (!subject || !date || !day || !time || !teacher) {
+          valid = false;
+          return;
+        }
+
+        exams.push({ subject, date, day, time, teacher });
+      });
+
+      if (!valid || exams.length === 0) {
+        showToast('⚠️ Please fill every field in every exam entry');
+        return;
+      }
+
+      const examSlips = loadFromStorage('messExamSlips');
+      const record = {
+        classId: cls.id,
+        className: cls.name,
+        session: cls.session || '',
+        grade: cls.grade || '',
+        section: cls.section || '',
+        examType: examType,
+        issueDate: issueDate,
+        exams: exams,
+        generatedDate: new Date().toISOString()
+      };
+
+      const idx = examSlips.findIndex(s => s.classId === cls.id);
+      if (idx !== -1) examSlips[idx] = record;
+      else examSlips.push(record);
+
+      saveToStorage('messExamSlips', examSlips);
+      showToast(`✅ Exam slip saved! Issue Date: ${issueDate} (Type: ${examType})`);
+    });
+
+    document.getElementById('resetExamFormBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('classSelect').value = '';
+      document.getElementById('examTypeSelect').value = '';
+      document.getElementById('examIssueDate').value = new Date().toISOString().split('T')[0];
+      
+      const fields = ['exam_classId', 'exam_session', 'exam_grade', 'exam_section'];
+      fields.forEach(id => document.getElementById(id).value = '');
+      
+      container.innerHTML = '';
+      addRow();
+      showToast('🔄 Form has been reset');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – View Attendance</title>
+   <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-calendar-check" style="color:#2563eb;"></i> View Attendance</h1>
+        
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-chart-pie"></i> Attendance Overview
+        </div>
+
+        <div class="overview-grid">
+          <div class="overview-card present">
+            <div class="overview-icon"><i class="fas fa-check-circle"></i></div>
+            <div>
+              <div class="overview-num" id="presentCount">0</div>
+              <div class="overview-label">Total Days Present</div>
+            </div>
+          </div>
+          <div class="overview-card absent">
+            <div class="overview-icon"><i class="fas fa-times-circle"></i></div>
+            <div>
+              <div class="overview-num" id="absentCount">0</div>
+              <div class="overview-label">Total Days Absent</div>
+            </div>
+          </div>
+          <div class="overview-card percentage">
+            <div class="overview-icon"><i class="fas fa-percentage"></i></div>
+            <div>
+              <div class="overview-num" id="percentageCount">0%</div>
+              <div class="overview-label">Attendance Percentage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-history"></i> Monthly Attendance Details
+        </div>
+
+        <div class="month-list" id="monthList"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="view-attendance.js"></script>
+</body>
+</html>

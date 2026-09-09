@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – Post Assignments</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-file-pen" style="color:#2563eb;"></i> Post Assignments</h1>
+        <p>Create and post hometasks for your assigned classes</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-id-badge"></i> Teacher Overview
+        </div>
+
+        <!-- dynamic teacher info -->
+        <div class="teacher-info-grid" id="teacherInfoGrid">
+          <div class="teacher-info-item">
+            <label><i class="fas fa-user-tie"></i> Teacher Name</label>
+            <span id="teacherName">—</span>
+          </div>
+          <div class="teacher-info-item">
+            <label><i class="fas fa-book-open"></i> Total Subjects</label>
+            <span id="totalSubjectsDisplay">0</span>
+          </div>
+          <div class="teacher-info-item">
+            <label><i class="fas fa-chalkboard"></i> Total Classes</label>
+            <span id="totalClassesDisplay">0</span>
+          </div>
+        </div>
+
+        <!-- dynamic subjects grid -->
+        <div class="subjects-grid" id="subjectsGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="assignmentModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h2><i class="fas fa-file-pen"></i> <span id="modalTitle">Post Hometask</span></h2>
+          <div class="sub" id="modalSub">Class · Class ID</div>
+        </div>
+        <button class="modal-close" onclick="closeAssignmentModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label><i class="fas fa-heading"></i> Hometask Name <span class="req">*</span></label>
+          <input type="text" id="hometaskName" placeholder="e.g. Chapter 3 – Exercise 3.2">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-align-left"></i> Description</label>
+          <textarea id="hometaskDescription" placeholder="Write instructions for the students..." rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-paperclip"></i> Upload (Image or PDF)</label>
+          <div class="upload-box" id="uploadBox">
+            <i class="fas fa-cloud-arrow-up"></i>
+            <div class="upload-text">Click to upload a file</div>
+            <div class="upload-hint">Accepted formats: JPG, PNG, PDF</div>
+            <input type="file" id="hometaskFile" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+          </div>
+          <div class="upload-filename" id="uploadFilename">
+            <i class="fas fa-file"></i>
+            <span id="uploadFilenameText"></span>
+            <button type="button" class="remove-file" onclick="clearFile()"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-calendar-day"></i> Current Date</label>
+          <div class="date-display"><i class="fas fa-calendar-check"></i> <span id="currentDateText">–</span></div>
+        </div>
+
+        <div class="save-row">
+          <button class="save-btn" onclick="saveAssignment()"><i class="fas fa-paper-plane"></i> Post Hometask</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><i class="fas fa-circle-check"></i> <span id="toastMsg">Hometask posted successfully!</span></div>
+
+  <script src="../components.js"></script>
+  <script src="teacher-assignments.js"></script>
+</body>
+</html>

@@ -1,0 +1,1318 @@
+/* ============================================
+   VIEW-DETAILS.CSS - Global Styles
+   For: view-teacher-results.html
+        view-mark-attendance.html
+        view-teacher-assignments.html
+        view-attendance-roster.html
+   All Icons Colored Blue | Table Headers Blue
+   Fully Responsive | Full Width Layout | Sharp Corners
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, Roboto, sans-serif;
+}
+
+body {
+  background: #f8fafc;
+  color: #1e293b;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== MAIN PANEL ===== */
+.main-panel {
+  flex: 1;
+  padding: 40px 32px;
+  background: #f8fafc;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  transition: all 0.3s;
+}
+
+/* ===== PAGE HEADER & CARD ===== */
+.page-header,
+.card {
+  background: white;
+  border-radius: 0 !important;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+  border: 1px solid #f1f5f9;
+}
+
+.page-header {
+  padding: 40px 36px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.page-header h1 i {
+  color: #2563eb;
+  background: none;
+  -webkit-text-fill-color: #2563eb;
+}
+
+.page-header p {
+  font-size: 16px;
+  color: #475569;
+  border-left: 3px solid #3b82f6;
+  padding-left: 16px;
+  margin-top: 8px;
+}
+
+.card {
+  padding: 40px;
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-title i {
+  color: #2563eb;
+  font-size: 22px;
+}
+
+/* ===== SEARCH WRAPPER ===== */
+.search-wrap {
+  position: relative;
+  margin-bottom: 28px;
+  max-width: 420px;
+}
+
+.search-wrap i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #2563eb;
+  font-size: 14px;
+}
+
+.search-wrap input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  border: 1.5px solid #e2e8f0;
+  font-size: 14.5px;
+  color: #1e293b;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.search-wrap input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.search-wrap input::placeholder {
+  color: #94a3b8;
+}
+
+/* ===== FILTERS ROW ===== */
+.filters-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 12px 16px;
+  border: 1.5px solid #e2e8f0;
+  font-size: 14.5px;
+  color: #1e293b;
+  background: white;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 180px;
+  transition: all 0.2s ease;
+}
+
+.filter-select:hover {
+  border-color: #94a3b8;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+/* ============================================
+   ACCORDION / SLIP STYLES (Class Groupings)
+   ============================================ */
+.slip-accordion {
+  border: 1.5px solid #e2e8f0;
+  margin-bottom: 16px;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.slip-accordion:last-child {
+  margin-bottom: 0;
+}
+
+.slip-accordion:hover {
+  border-color: #94a3b8;
+}
+
+.slip-accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  cursor: pointer;
+  list-style: none;
+  background: #fafcff;
+  transition: background 0.2s ease;
+  user-select: none;
+}
+
+.slip-accordion summary:hover {
+  background: #f1f5f9;
+}
+
+.slip-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.slip-accordion summary .summary-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.slip-accordion summary .summary-left .slip-icon {
+  font-size: 22px;
+  color: #2563eb;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff6ff;
+  flex-shrink: 0;
+}
+
+.slip-accordion summary .summary-left h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.slip-accordion summary .summary-left h3 span {
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.slip-accordion summary .summary-left > div > span {
+  font-size: 13px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.slip-accordion summary .summary-left > div > span strong {
+  color: #1e293b;
+}
+
+.slip-accordion summary .summary-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.slip-accordion summary .summary-right .chevron {
+  font-size: 14px;
+  color: #94a3b8;
+  transition: transform 0.3s ease;
+}
+
+.slip-accordion[open] summary .summary-right .chevron {
+  transform: rotate(180deg);
+}
+
+.slip-accordion summary .delete-slip-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ef4444;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.slip-accordion summary .delete-slip-btn:hover {
+  background: #fecaca;
+  border-color: #ef4444;
+  color: #991b1b;
+}
+
+.slip-accordion summary .delete-slip-btn i {
+  font-size: 12px;
+}
+
+.slip-accordion .table-wrapper {
+  border-top: 1.5px solid #e2e8f0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.slip-accordion .table-wrapper table {
+  min-width: 100%;
+}
+
+.slip-accordion .table-wrapper thead th {
+  background: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid #1d4ed8;
+  white-space: nowrap;
+}
+
+.slip-accordion .table-wrapper thead th i {
+  color: white;
+  margin-right: 6px;
+}
+
+.slip-accordion .table-wrapper tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 13px;
+  color: #1e293b;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.slip-accordion .table-wrapper tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.slip-accordion .table-wrapper tbody tr:hover {
+  background: #fafcff;
+}
+
+/* ===== Percentage Badges (Results) ===== */
+.pct-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  min-width: 48px;
+  white-space: nowrap;
+}
+
+.pct-badge.pct-high {
+  background: #d1fae5;
+  color: #166534;
+  border: 1px solid #a7f3d0;
+}
+
+.pct-badge.pct-medium {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.pct-badge.pct-low {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* ===== STATUS BADGES (Attendance) ===== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.status-badge.status-active {
+  background: #d1fae5;
+  color: #166534;
+  border: 1px solid #a7f3d0;
+}
+
+.status-badge.status-inactive {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Legacy status classes for backward compatibility */
+.status-badge.status-present {
+  background: #d1fae5;
+  color: #166534;
+  border: 1px solid #a7f3d0;
+}
+
+.status-badge.status-absent {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* ===== TYPE BADGES (Results) ===== */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.type-badge.type-test {
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.type-badge.type-paper {
+  background: #f3e8ff;
+  color: #6b21a8;
+  border: 1px solid #e9d5ff;
+}
+
+/* ===== MARKS DISPLAY (Results) ===== */
+.marks-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marks-num {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.marks-pct {
+  font-size: 12px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+}
+
+/* ===== DESCRIPTION CELL (Assignments) ===== */
+.desc-cell {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* ===== FILE CELL (Assignments) ===== */
+.file-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.file-cell i {
+  color: #2563eb;
+}
+
+/* ===== STUDENT PHOTO (Attendance) ===== */
+.student-photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-size: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.student-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== ACTION ICONS ===== */
+.action-icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.action-icons i {
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.exam-delete-icon {
+  color: #94a3b8;
+}
+
+.exam-delete-icon:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.delete-icon {
+  color: #94a3b8;
+}
+
+.delete-icon:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.view-icon {
+  color: #94a3b8;
+}
+
+.view-icon:hover {
+  color: #3b82f6;
+  transform: scale(1.1);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+
+.empty-state i {
+  font-size: 40px;
+  margin-bottom: 14px;
+  display: block;
+  color: #2563eb;
+}
+
+.empty-state p {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+.toast-msg {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #1f2937;
+  color: white;
+  padding: 12px 24px;
+  font-size: 13px;
+  z-index: 2200;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideUp 0.35s ease;
+  border-radius: 4px;
+}
+
+.toast-msg i {
+  color: #3b82f6;
+  font-size: 18px;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   MODAL STYLES
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40px 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: white;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease;
+  border-radius: 0;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  padding: 24px 28px;
+  border-bottom: 2px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eff6ff;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 19px;
+  color: #1e293b;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 700;
+}
+
+.modal-header h2 i {
+  color: #2563eb;
+}
+
+.modal-close {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 0;
+}
+
+.modal-close:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.modal-body {
+  padding: 28px;
+}
+
+.modal-body .detail-row {
+  margin-bottom: 20px;
+}
+
+.modal-body .detail-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-body .detail-label i {
+  color: #2563eb;
+}
+
+.modal-body .detail-value {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-left: 3px solid #2563eb;
+  word-break: break-word;
+}
+
+/* ===== MARKS DETAIL (Results Modal) ===== */
+.marks-detail {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2563eb;
+  text-align: center;
+  padding: 16px;
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  margin: 16px 0;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* ===== TABLET (992px and below) ===== */
+@media (max-width: 992px) {
+  .main-panel {
+    padding: 32px 24px;
+  }
+
+  .page-header {
+    padding: 32px 28px;
+    margin-bottom: 28px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .page-header p {
+    font-size: 15px;
+  }
+
+  .card {
+    padding: 32px 24px;
+  }
+
+  .card-title {
+    font-size: 17px;
+  }
+
+  .filters-row {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .search-wrap {
+    margin-bottom: 16px;
+  }
+
+  .filter-select {
+    min-width: 140px;
+  }
+
+  .slip-accordion summary {
+    padding: 16px 20px;
+  }
+
+  .slip-accordion summary .summary-left h3 {
+    font-size: 15px;
+  }
+
+  .slip-accordion summary .summary-left > div > span {
+    font-size: 12px;
+  }
+
+  .slip-accordion .table-wrapper thead th {
+    padding: 10px 14px;
+    font-size: 10px;
+  }
+
+  .slip-accordion .table-wrapper tbody td {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .action-icons i {
+    font-size: 16px;
+    padding: 4px;
+  }
+}
+
+/* ===== MOBILE (768px and below) ===== */
+@media (max-width: 768px) {
+  .main-panel {
+    padding: 24px 16px;
+  }
+
+  .page-header {
+    padding: 24px 20px;
+    margin-bottom: 20px;
+  }
+
+  .page-header h1 {
+    font-size: 20px;
+    gap: 8px;
+  }
+
+  .page-header h1 i {
+    font-size: 20px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    margin-top: 4px;
+    padding-left: 10px;
+  }
+
+  .card {
+    padding: 24px 16px;
+  }
+
+  .card-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .card-title i {
+    font-size: 18px;
+  }
+
+  .search-wrap {
+    max-width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .search-wrap input {
+    font-size: 14px;
+    padding: 10px 14px 10px 38px;
+  }
+
+  .filters-row {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: unset;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .slip-accordion summary {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+  }
+
+  .slip-accordion summary .summary-left {
+    gap: 12px;
+  }
+
+  .slip-accordion summary .summary-left .slip-icon {
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .slip-accordion summary .summary-left h3 {
+    font-size: 14px;
+  }
+
+  .slip-accordion summary .summary-left > div > span {
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+
+  .slip-accordion summary .summary-right {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  .slip-accordion summary .delete-slip-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .slip-accordion .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .slip-accordion .table-wrapper table {
+    min-width: 700px;
+  }
+
+  .slip-accordion .table-wrapper thead th {
+    padding: 10px 12px;
+    font-size: 10px;
+  }
+
+  .slip-accordion .table-wrapper tbody td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .action-icons {
+    gap: 10px;
+  }
+
+  .action-icons i {
+    font-size: 15px;
+    padding: 4px;
+  }
+
+  .desc-cell {
+    max-width: 120px;
+  }
+
+  .modal-box {
+    max-height: 90vh;
+    width: 95%;
+  }
+
+  .modal-header {
+    padding: 20px 24px;
+  }
+
+  .modal-header h2 {
+    font-size: 17px;
+  }
+
+  .modal-body {
+    padding: 24px;
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .toast-msg {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    padding: 12px 20px;
+    font-size: 13px;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ===== SMALL MOBILE (480px and below) ===== */
+@media (max-width: 480px) {
+  .main-panel {
+    padding: 16px 12px;
+  }
+
+  .page-header {
+    padding: 20px 16px;
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 17px;
+    gap: 6px;
+  }
+
+  .page-header h1 i {
+    font-size: 18px;
+  }
+
+  .page-header p {
+    font-size: 12px;
+    padding-left: 8px;
+  }
+
+  .card {
+    padding: 20px 12px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+  }
+
+  .card-title i {
+    font-size: 16px;
+  }
+
+  .search-wrap input {
+    font-size: 13px;
+    padding: 9px 12px 9px 36px;
+  }
+
+  .search-wrap i {
+    left: 12px;
+    font-size: 12px;
+  }
+
+  .filters-row {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .filter-select {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .slip-accordion summary {
+    padding: 12px 12px;
+  }
+
+  .slip-accordion summary .summary-left .slip-icon {
+    font-size: 16px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .slip-accordion summary .summary-left h3 {
+    font-size: 13px;
+  }
+
+  .slip-accordion summary .summary-left > div > span {
+    font-size: 10px;
+  }
+
+  .slip-accordion summary .delete-slip-btn {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .slip-accordion .table-wrapper table {
+    min-width: 580px;
+  }
+
+  .slip-accordion .table-wrapper thead th {
+    padding: 8px 10px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .slip-accordion .table-wrapper tbody td {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .desc-cell {
+    max-width: 100px;
+    font-size: 11px;
+  }
+
+  .marks-display {
+    gap: 8px;
+  }
+
+  .marks-num {
+    font-size: 13px;
+  }
+
+  .marks-pct {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .status-badge {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .type-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .pct-badge {
+    font-size: 10px;
+    padding: 3px 10px;
+    min-width: 40px;
+  }
+
+  .action-icons {
+    gap: 8px;
+  }
+
+  .action-icons i {
+    font-size: 14px;
+    padding: 3px;
+  }
+
+  .modal-box {
+    width: 98%;
+    max-height: 85vh;
+  }
+
+  .modal-header {
+    padding: 16px 18px;
+  }
+
+  .modal-header h2 {
+    font-size: 15px;
+  }
+
+  .modal-body {
+    padding: 18px 16px;
+  }
+
+  .modal-close {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .modal-body .detail-label {
+    font-size: 11px;
+  }
+
+  .modal-body .detail-value {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .marks-detail {
+    font-size: 20px;
+    padding: 12px;
+  }
+
+  .toast-msg {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .empty-state {
+    padding: 40px 16px;
+  }
+
+  .empty-state i {
+    font-size: 32px;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+  }
+}
+
+/* ===== EXTRA SMALL (360px and below) ===== */
+@media (max-width: 360px) {
+  .main-panel {
+    padding: 12px 8px;
+  }
+
+  .page-header {
+    padding: 16px 12px;
+  }
+
+  .page-header h1 {
+    font-size: 15px;
+  }
+
+  .page-header p {
+    font-size: 11px;
+    padding-left: 6px;
+  }
+
+  .card {
+    padding: 16px 10px;
+  }
+
+  .card-title {
+    font-size: 14px;
+  }
+
+  .card-title i {
+    font-size: 14px;
+  }
+
+  .slip-accordion summary {
+    padding: 10px 10px;
+  }
+
+  .slip-accordion summary .summary-left .slip-icon {
+    font-size: 14px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .slip-accordion summary .summary-left h3 {
+    font-size: 12px;
+  }
+
+  .slip-accordion .table-wrapper table {
+    min-width: 500px;
+  }
+
+  .slip-accordion .table-wrapper thead th {
+    padding: 6px 8px;
+    font-size: 8px;
+  }
+
+  .slip-accordion .table-wrapper tbody td {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .file-cell {
+    font-size: 11px;
+  }
+
+  .file-cell i {
+    font-size: 13px;
+  }
+
+  .action-icons i {
+    font-size: 12px;
+    padding: 2px;
+  }
+
+  .modal-header {
+    padding: 14px 14px;
+  }
+
+  .modal-header h2 {
+    font-size: 14px;
+  }
+
+  .modal-body {
+    padding: 14px 12px;
+  }
+
+  .modal-body .detail-value {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .marks-detail {
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .toast-msg {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .action-icons,
+  .delete-icon,
+  .view-icon,
+  .exam-delete-icon,
+  .filters-row,
+  .search-wrap,
+  .delete-slip-btn {
+    display: none !important;
+  }
+
+  .slip-accordion .table-wrapper {
+    overflow: visible !important;
+    border: 1px solid #ddd;
+  }
+
+  .slip-accordion .table-wrapper table {
+    min-width: 100% !important;
+  }
+
+  .page-header,
+  .card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .slip-accordion {
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+
+  .slip-accordion summary {
+    background: #f1f5f9 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .slip-accordion .table-wrapper thead th {
+    background: #2563eb !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .modal-overlay {
+    display: none !important;
+  }
+
+  .slip-accordion summary .summary-right .chevron {
+    display: none !important;
+  }
+}

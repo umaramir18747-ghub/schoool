@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – Notifications</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+  <!-- separate CSS file -->
+  <link rel="stylesheet" href="../view-notifications.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-bell" style="color:#2563eb;"></i> Notifications</h1>
+        
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-list"></i> All Notifications
+        </div>
+        <div class="notif-list" id="notifList"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../components.js"></script>
+  <script>
+    // ===== all JS content (unchanged) =====
+    window.onload = function() {
+      if (!requireAnySession()) return;
+
+      fetch('header.html').then(r=>r.text()).then(d=>{document.getElementById('header-placeholder').innerHTML=d;}).catch(e=>console.error(e));
+      fetch('sidebar.html').then(r=>r.text()).then(d=>{document.getElementById('sidebar-placeholder').innerHTML=d;}).catch(e=>console.error(e));
+      setTimeout(()=>{ if(typeof window.initHeaderAndSidebar==='function'){ window.initHeaderAndSidebar(); } },400);
+
+      renderNotifications();
+    };
+
+    // ===== Session Guard: any logged-in student or teacher =====
+    function requireAnySession() {
+      const stored = localStorage.getItem('messCurrentUser');
+      const session = stored ? JSON.parse(stored) : null;
+      if (!session || (session.role !== 'student' && session.role !== 'teacher')) {
+        window.location.href = 'login.html';
+        return false;
+      }
+      return true;
+    }
+
+    // ===== Storage Helpers =====
+    function loadFromStorage(key) {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function formatDisplayDateTime(isoStr) {
+      const d = new Date(isoStr);
+      if (isNaN(d.getTime())) return isoStr;
+      return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) +
+        ' · ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function renderNotifications() {
+      const notifications = loadFromStorage('messNotifications')
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      const list = document.getElementById('notifList');
+
+      if (notifications.length === 0) {
+        list.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>No notifications yet.</p></div>`;
+        return;
+      }
+
+      list.innerHTML = notifications.map(n => {
+        const isImage = n.fileType && n.fileType.startsWith('image/');
+        const attachmentHtml = n.fileName
+          ? `<div class="notif-attachment"><i class="fas ${isImage ? 'fa-file-image' : 'fa-file-pdf'}"></i> ${n.fileName}</div>`
+          : '';
+        const imagePreviewHtml = (isImage && n.fileDataUrl)
+          ? `<div class="notif-image-preview"><img src="${n.fileDataUrl}" alt="${n.fileName}"></div>`
+          : '';
+
+        return `
+          <div class="notif-card">
+            <div class="notif-icon"><i class="fas fa-bullhorn"></i></div>
+            <div class="notif-body">
+              <div class="notif-top">
+                <div class="notif-title">${n.title}</div>
+                <div class="notif-date">${formatDisplayDateTime(n.date)}</div>
+              </div>
+             
+              <div class="notif-desc">${n.description}</div>
+              ${attachmentHtml}
+              ${imagePreviewHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

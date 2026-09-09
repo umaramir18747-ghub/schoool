@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEI – My Results</title>
+  <link rel="icon" type="image/png" href="../logo2.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../components.css">
+  <link rel="stylesheet" href="../responsive-components.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+  <div class="app-wrapper" id="appWrapper">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-panel">
+      <div class="page-header">
+        <h1><i class="fas fa-chart-simple" style="color:#2563eb;"></i> My Results</h1>
+        
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-chalkboard"></i> Class Overview
+        </div>
+
+        <!-- dynamic class info -->
+        <div class="class-info-grid" id="classInfoGrid">
+          <div class="class-info-item">
+            <label><i class="fas fa-chalkboard-teacher"></i> Class Name</label>
+            <span id="className">—</span>
+          </div>
+          <div class="class-info-item">
+            <label><i class="fas fa-id-card"></i> Class ID</label>
+            <span id="classId">—</span>
+          </div>
+          <div class="class-info-item">
+            <label><i class="fas fa-layer-group"></i> Grade</label>
+            <span id="grade">—</span>
+          </div>
+          <div class="class-info-item">
+            <label><i class="fas fa-calendar-alt"></i> Session</label>
+            <span id="session">—</span>
+          </div>
+          <div class="class-info-item">
+            <label><i class="fas fa-tags"></i> Section</label>
+            <span id="section">—</span>
+          </div>
+        </div>
+
+        <!-- dynamic subjects grid -->
+        <div class="subjects-grid" id="subjectsGrid"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="resultModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h2><i class="fas fa-chart-simple"></i> <span id="modalTitle">Result Details</span></h2>
+          <div class="sub" id="modalSub">Subject</div>
+        </div>
+        <button class="modal-close" onclick="closeResultModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mode-switch">
+          <button class="mode-btn active" id="testModeBtn" onclick="setMode('test')"><i class="fas fa-pen"></i> Test Result</button>
+          <button class="mode-btn" id="paperModeBtn" onclick="setMode('paper')"><i class="fas fa-file-lines"></i> Paper Result</button>
+        </div>
+
+        <div class="result-table-wrap">
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th id="nameColHead">Test Name</th>
+                <th>Date</th>
+                <th>Total Marks</th>
+                <th>Obtained Marks</th>
+                <th>Percentage</th>
+              </tr>
+            </thead>
+            <tbody id="resultTableBody">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Summary -->
+        <div class="result-summary-footer" id="resultSummaryFooter" style="display:none; margin-top: 16px; padding: 12px 16px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <span><strong>Average:</strong> <span id="avgPercentage">0.0%</span></span>
+            <span><strong>Highest:</strong> <span id="highestScore">0</span></span>
+            <span><strong>Lowest:</strong> <span id="lowestScore">0</span></span>
+            <span><strong>Total Tests:</strong> <span id="totalTests">0</span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="student-results.js"></script>
+</body>
+</html>

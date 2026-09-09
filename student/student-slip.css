@@ -1,0 +1,733 @@
+/* ============================================
+   STUDENT-SLIP.CSS
+   Simple White Design | Fully Responsive
+   A4 One-Page PDF | Auto-Adjust Content
+   All Icons Blue | Sharp Corners
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: #f8fafc;
+  color: #1e293b;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.main-panel {
+  flex: 1;
+  padding: 20px 12px;
+  background: #f8fafc;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  transition: all 0.3s;
+}
+
+.page-header {
+  background: white;
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+  border: 1px solid #f1f5f9;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.page-header h1 i {
+  color: #2563eb;
+  background: none;
+  -webkit-text-fill-color: #2563eb;
+}
+
+.page-header p {
+  font-size: 16px;
+  color: #475569;
+  border-left: 3px solid #3b82f6;
+  padding-left: 16px;
+  margin-top: 0;
+}
+
+.card {
+  background: white;
+  padding: 0;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
+  border: 1px solid #f1f5f9;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.download-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 13px 26px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+
+.download-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.slip-wrap {
+  padding: 16px 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.slip-doc {
+  background: white;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.slip-header {
+  background: #2563eb;
+  color: white;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.slip-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.slip-header-logo {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 20px;
+  color: white;
+}
+
+.slip-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.slip-header .school-tag {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.slip-header-right {
+  text-align: right;
+}
+
+.slip-header-right .doc-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.slip-body {
+  padding: 20px 28px 16px;
+}
+
+.student-strip {
+  display: flex;
+  gap: 26px;
+  padding-bottom: 14px;
+  border-bottom: 2px dashed #e2e8f0;
+  margin-bottom: 14px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.student-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 28px;
+  min-width: 280px;
+  order: 1;
+}
+
+.s-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.s-field label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.s-field label i {
+  color: #2563eb;
+  font-size: 11px;
+}
+
+.s-field span {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.student-photo-box {
+  flex-shrink: 0;
+  order: 2;
+  width: 90px;
+  height: 110px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.student-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.student-photo-box .photo-placeholder {
+  font-size: 36px;
+  color: #2563eb;
+}
+
+.class-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 14px;
+}
+
+.class-strip .c-field {
+  padding: 8px 14px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.class-strip .c-field:last-child {
+  border-right: none;
+}
+
+.class-strip .c-field label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: block;
+}
+
+.class-strip .c-field span {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.schedule-section {
+  margin-bottom: 10px;
+}
+
+.schedule-section h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.schedule-section h3 i {
+  color: #2563eb;
+}
+
+.slip-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid #e2e8f0;
+}
+
+.slip-table thead th {
+  background: #f8fafc;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #2563eb;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: left;
+  padding: 6px 12px;
+  border-bottom: 1.5px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+}
+
+.slip-table thead th:last-child {
+  border-right: none;
+}
+
+.slip-table thead th:nth-child(1) { width: 30%; }
+.slip-table thead th:nth-child(2) { width: 18%; }
+.slip-table thead th:nth-child(3) { width: 16%; }
+.slip-table thead th:nth-child(4) { width: 16%; }
+.slip-table thead th:nth-child(5) { width: 20%; }
+
+.slip-table tbody td {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  border-right: 1px solid #f1f5f9;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.slip-table tbody td:last-child {
+  border-right: none;
+}
+
+.slip-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.slip-table tbody tr:nth-child(even) {
+  background: #fafcff;
+}
+
+.instructions-section {
+  margin-top: 10px;
+}
+
+.instructions-section h3 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dc2626;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.instructions-section h3 i {
+  color: #dc2626;
+}
+
+.instructions-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 20px;
+  background: #fafcff;
+  border: 1px solid #e2e8f0;
+  padding: 8px 14px;
+}
+
+.instructions-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  color: #334155;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.instructions-list li i {
+  color: #2563eb;
+  font-size: 10px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SLIP FOOTER (Equal alignment & Sign___________)
+   ============================================ */
+.slip-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 28px 14px;
+  border-top: 2px solid #e2e8f0;
+  background: #fafcff;
+  gap: 20px;
+  width: 100%;
+}
+
+.slip-footer .footer-left {
+  flex: 1;
+  text-align: left;
+}
+
+.slip-footer .footer-right {
+  flex: 1;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.slip-footer .issued-on {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Updated Sign___________ Field */
+.slip-footer .signature-field {
+  font-size: 13px;
+  color: #1e293b;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* ============================================
+   PDF CAPTURE MODE (Pixel-perfect A4 Document)
+   ============================================ */
+.pdf-capture-mode {
+  background: white !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif !important;
+  width: 760px !important;
+  max-width: 760px !important;
+  box-sizing: border-box !important;
+}
+
+.pdf-capture-mode .slip-doc {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border: 1px solid #e2e8f0 !important;
+  box-sizing: border-box !important;
+}
+
+.pdf-capture-mode .slip-wrap {
+  padding: 0 !important;
+}
+
+.pdf-capture-mode .slip-header {
+  padding: 16px 24px !important;
+  background: #2563eb !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.pdf-capture-mode .slip-header-logo {
+  width: 42px !important;
+  height: 42px !important;
+  font-size: 18px !important;
+  background: rgba(255,255,255,0.2) !important;
+}
+
+.pdf-capture-mode .slip-header h2 {
+  font-size: 17px !important;
+  margin: 0 !important;
+  color: white !important;
+}
+
+.pdf-capture-mode .slip-header .school-tag {
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.pdf-capture-mode .slip-header .doc-title {
+  font-size: 13px !important;
+  color: white !important;
+}
+
+.pdf-capture-mode .slip-body {
+  padding: 18px 24px 14px !important;
+}
+
+.pdf-capture-mode .student-strip {
+  display: flex !important;
+  gap: 24px !important;
+  padding-bottom: 14px !important;
+  margin-bottom: 14px !important;
+  align-items: flex-start !important;
+  border-bottom: 2px dashed #e2e8f0 !important;
+}
+
+.pdf-capture-mode .student-fields {
+  flex: 1 !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px 28px !important;
+  min-width: 0 !important;
+}
+
+.pdf-capture-mode .s-field {
+  padding: 2px 0 !important;
+}
+
+.pdf-capture-mode .s-field label {
+  font-size: 10px !important;
+  color: #64748b !important;
+  font-weight: 700 !important;
+}
+
+.pdf-capture-mode .s-field span {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+}
+
+.pdf-capture-mode .student-photo-box {
+  width: 88px !important;
+  height: 108px !important;
+  min-width: 88px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  flex-shrink: 0 !important;
+}
+
+.pdf-capture-mode .student-photo-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.pdf-capture-mode .class-strip {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 0 !important;
+  margin-bottom: 12px !important;
+  background: #f8fafc !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.pdf-capture-mode .class-strip .c-field {
+  padding: 7px 10px !important;
+}
+
+.pdf-capture-mode .class-strip .c-field label {
+  font-size: 8px !important;
+  color: #64748b !important;
+}
+
+.pdf-capture-mode .class-strip .c-field span {
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+}
+
+.pdf-capture-mode .schedule-section {
+  margin: 10px 0 !important;
+}
+
+.pdf-capture-mode .schedule-section h3 {
+  font-size: 13px !important;
+  margin-bottom: 7px !important;
+  color: #1e293b !important;
+}
+
+.pdf-capture-mode .slip-table {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+}
+
+.pdf-capture-mode .slip-table th,
+.pdf-capture-mode .slip-table td {
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  padding: 7px 10px !important;
+}
+
+.pdf-capture-mode .slip-table th {
+  background: #f8fafc !important;
+  color: #2563eb !important;
+  font-size: 10px !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.pdf-capture-mode .slip-table tbody td {
+  color: #1e293b !important;
+  font-size: 11.5px !important;
+}
+
+.pdf-capture-mode .slip-table tr:nth-child(even) {
+  background: #fafcff !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.pdf-capture-mode .instructions-section {
+  margin-top: 10px !important;
+}
+
+.pdf-capture-mode .instructions-section h3 {
+  font-size: 12px !important;
+  margin-bottom: 6px !important;
+  color: #dc2626 !important;
+}
+
+.pdf-capture-mode .instructions-list {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 4px 18px !important;
+  padding: 8px 14px !important;
+  background: #fafcff !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.pdf-capture-mode .instructions-list li {
+  font-size: 10.5px !important;
+  padding: 2px 0 !important;
+  color: #334155 !important;
+  break-inside: avoid !important;
+}
+
+.pdf-capture-mode .slip-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 12px 24px 14px !important;
+  background: #fafcff !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  gap: 20px !important;
+  width: 100% !important;
+}
+
+.pdf-capture-mode .slip-footer .issued-on {
+  font-size: 11px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+.pdf-capture-mode .slip-footer .signature-field {
+  font-size: 13px !important;
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Force high contrast colors in PDF */
+.pdf-capture-mode .slip-header * { color: white !important; }
+.pdf-capture-mode .slip-header h2 { color: white !important; }
+.pdf-capture-mode .slip-header .school-tag { color: rgba(255, 255, 255, 0.85) !important; }
+.pdf-capture-mode .slip-table th { color: #2563eb !important; }
+.pdf-capture-mode .s-field label,
+.pdf-capture-mode .class-strip .c-field label { color: #64748b !important; }
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 992px) {
+  .main-panel { padding: 18px 10px; }
+  .page-header { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
+  .page-header h1 { font-size: 22px; }
+  .slip-wrap { padding: 12px 8px; }
+  .slip-body { padding: 14px 16px 12px; }
+  .class-strip { grid-template-columns: repeat(3, 1fr); }
+  .instructions-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .main-panel { padding: 14px 8px; }
+  .page-header { padding: 16px 12px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .page-header h1 { font-size: 19px; }
+  .student-strip { flex-direction: column; align-items: center; gap: 12px; }
+  .student-fields { grid-template-columns: 1fr 1fr; gap: 6px 12px; min-width: auto; width: 100%; order: 0; }
+  .student-photo-box { order: 0; width: 70px; height: 88px; }
+  .class-strip { grid-template-columns: 1fr 1fr; }
+  .slip-footer { padding: 10px 14px; flex-direction: row; justify-content: space-between; }
+  .download-btn { width: 100%; justify-content: center; padding: 12px 16px; }
+}
+
+/* ============================================
+   NATIVE PRINT (A4 Portrait)
+   ============================================ */
+@page {
+  size: A4 portrait;
+  margin: 6mm;
+}
+
+@media print {
+  body { background: white; padding: 0; margin: 0; }
+  .main-panel { padding: 0 !important; background: white !important; }
+  .page-header, .download-btn { display: none !important; }
+  .slip-wrap { padding: 0 !important; margin: 0 !important; }
+  .slip-doc { border: 1px solid #cbd5e1 !important; page-break-inside: avoid !important; }
+  .slip-header { background: #2563eb !important; color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .class-strip, .slip-table thead th, .slip-table tbody tr:nth-child(even), .instructions-list {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
