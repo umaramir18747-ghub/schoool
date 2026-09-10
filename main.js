@@ -1,8 +1,87 @@
 /**
- * Muhammad Education Institute — Interactive Vanilla JavaScript (script.js)
+ * Muhammad Education Institute — Interactive Vanilla JavaScript with Local Storage
+ * Integrates localStorage for contact messages and admission applications
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ================= LOCAL STORAGE MANAGER =================
+  class StorageManager {
+    constructor() {
+      this.messagesKey = 'MEI_CONTACT_MESSAGES';
+      this.admissionsKey = 'MEI_ADMISSION_APPLICATIONS';
+    }
+
+    // Message Storage Methods
+    saveMessage(message) {
+      const messages = this.getMessages();
+      message.id = Date.now();
+      message.timestamp = new Date().toISOString();
+      message.replied = false;
+      messages.push(message);
+      localStorage.setItem(this.messagesKey, JSON.stringify(messages));
+      console.log('Message saved to localStorage:', message);
+      return message;
+    }
+
+    getMessages() {
+      const data = localStorage.getItem(this.messagesKey);
+      return data ? JSON.parse(data) : [];
+    }
+
+    deleteMessage(id) {
+      const messages = this.getMessages();
+      const filtered = messages.filter(m => m.id !== id);
+      localStorage.setItem(this.messagesKey, JSON.stringify(filtered));
+    }
+
+    // Admission Storage Methods
+    saveAdmission(admission) {
+      const admissions = this.getAdmissions();
+      admission.id = Date.now();
+      admission.refId = 'MEI-ADM-' + Math.floor(10000 + Math.random() * 90000);
+      admission.timestamp = new Date().toISOString();
+      admission.status = 'pending';
+      admissions.push(admission);
+      localStorage.setItem(this.admissionsKey, JSON.stringify(admissions));
+      console.log('Admission saved to localStorage:', admission);
+      return admission;
+    }
+
+    getAdmissions() {
+      const data = localStorage.getItem(this.admissionsKey);
+      return data ? JSON.parse(data) : [];
+    }
+
+    deleteAdmission(id) {
+      const admissions = this.getAdmissions();
+      const filtered = admissions.filter(a => a.id !== id);
+      localStorage.setItem(this.admissionsKey, JSON.stringify(filtered));
+    }
+
+    // Statistics
+    getMessageStats() {
+      const messages = this.getMessages();
+      const today = new Date().toLocaleDateString();
+      return {
+        total: messages.length,
+        today: messages.filter(m => new Date(m.timestamp).toLocaleDateString() === today).length,
+        pending: messages.filter(m => !m.replied).length
+      };
+    }
+
+    getAdmissionStats() {
+      const admissions = this.getAdmissions();
+      const today = new Date().toLocaleDateString();
+      return {
+        total: admissions.length,
+        today: admissions.filter(a => new Date(a.timestamp).toLocaleDateString() === today).length,
+        pending: admissions.filter(a => a.status === 'pending').length
+      };
+    }
+  }
+
+  const storage = new StorageManager();
 
   // ================= 1. NAVBAR SCROLL EFFECT =================
   const mainHeader = document.getElementById('main-header');
@@ -23,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenu.classList.toggle('open');
     });
 
-    // Close when clicking links
     const mobileLinks = mobileMenu.querySelectorAll('a');
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
@@ -79,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevSideBox = document.getElementById('gallery-prev-box');
   const nextSideBox = document.getElementById('gallery-next-box');
 
-  // Render dots
   if (dotsContainer) {
     gallerySlides.forEach((_, idx) => {
       const dot = document.createElement('div');
@@ -94,20 +171,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevIndex = (currentSlideIndex - 1 + gallerySlides.length) % gallerySlides.length;
     const nextIndex = (currentSlideIndex + 1) % gallerySlides.length;
 
-    // Update Main Slide
     if (mainImg) mainImg.src = gallerySlides[currentSlideIndex].img;
     if (mainTag) mainTag.textContent = gallerySlides[currentSlideIndex].tag;
     if (mainTitle) mainTitle.textContent = gallerySlides[currentSlideIndex].title;
     if (mainDesc) mainDesc.textContent = gallerySlides[currentSlideIndex].desc;
 
-    // Update Previews
     if (prevPreviewImg) prevPreviewImg.src = gallerySlides[prevIndex].img;
     if (prevPreviewTitle) prevPreviewTitle.textContent = gallerySlides[prevIndex].title;
 
     if (nextPreviewImg) nextPreviewImg.src = gallerySlides[nextIndex].img;
     if (nextPreviewTitle) nextPreviewTitle.textContent = gallerySlides[nextIndex].title;
 
-    // Update dots
     const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
     dots.forEach((d, i) => {
       d.classList.toggle('active', i === currentSlideIndex);
@@ -120,15 +194,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (prevSideBox) prevSideBox.addEventListener('click', () => updateGallery(currentSlideIndex - 1));
   if (nextSideBox) nextSideBox.addEventListener('click', () => updateGallery(currentSlideIndex + 1));
 
-  // Initialize initial previews
   updateGallery(0);
 
-  // Auto slide every 6 seconds
   let autoSlideTimer = setInterval(() => {
     updateGallery(currentSlideIndex + 1);
   }, 6000);
 
-  // Pause on hover
   const mainGalleryCard = document.querySelector('.main-image-card');
   if (mainGalleryCard) {
     mainGalleryCard.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
@@ -137,27 +208,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ================= 4. CONTACT FORM SUBMISSION =================
+  // ================= 4. CONTACT FORM SUBMISSION WITH LOCAL STORAGE =================
   const contactForm = document.getElementById('institute-contact-form');
   const contactSuccessMsg = document.getElementById('contact-success-msg');
 
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Simulate form submission
+      
+      // Collect form data
+      const messageData = {
+        name: document.getElementById('c-name').value,
+        email: document.getElementById('c-email').value,
+        phone: document.getElementById('c-phone').value,
+        subject: document.getElementById('c-subject').value,
+        message: document.getElementById('c-message').value
+      };
+
+      // Save to localStorage
+      const savedMessage = storage.saveMessage(messageData);
+
+      // Visual feedback
       contactForm.style.opacity = '0.5';
       const submitBtn = contactForm.querySelector('.btn-submit');
-      if (submitBtn) submitBtn.textContent = 'Submitting...';
+      if (submitBtn) submitBtn.textContent = 'Saving...';
 
       setTimeout(() => {
         contactForm.reset();
         contactForm.style.opacity = '1';
         if (submitBtn) submitBtn.textContent = 'Send Message';
+        
         if (contactSuccessMsg) {
           contactSuccessMsg.style.display = 'block';
+          contactSuccessMsg.innerHTML = `
+            ✓ Message saved successfully! Ref ID: ${savedMessage.id}<br>
+            <small style="opacity: 0.8;">You can view this message in the <a href="view-admissions.html" style="color: inherit; text-decoration: underline;">Messages Dashboard</a></small>
+          `;
           setTimeout(() => {
             contactSuccessMsg.style.display = 'none';
-          }, 5000);
+          }, 6000);
         }
       }, 700);
     });
@@ -180,13 +269,11 @@ document.addEventListener('DOMContentLoaded', () => {
     closePortalBtn.addEventListener('click', () => portalModal.classList.remove('open'));
   }
 
-  // Close on outside click
   window.addEventListener('click', (e) => {
     if (e.target === portalModal) portalModal.classList.remove('open');
     if (e.target === admissionModal) admissionModal.classList.remove('open');
   });
 
-  // Portal tabs
   const pTabs = document.querySelectorAll('.p-tab');
   pTabs.forEach(tab => {
     tab.addEventListener('click', (e) => {
@@ -217,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ================= 6. ADMISSION APPLICATION MODAL =================
+  // ================= 6. ADMISSION APPLICATION MODAL WITH LOCAL STORAGE =================
   const admissionModal = document.getElementById('admission-modal');
   const heroEnrollBtn = document.getElementById('hero-enroll-btn');
   const mobileEnrollBtn = document.getElementById('mobile-enroll-btn');
@@ -246,11 +333,35 @@ document.addEventListener('DOMContentLoaded', () => {
   if (admissionAppForm) {
     admissionAppForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const randRef = 'MEI-ADM-' + Math.floor(10000 + Math.random() * 90000);
-      if (admRefText) admRefText.textContent = `Ref ID: ${randRef}`;
+      
+      // Collect form data
+      const admissionData = {
+        studentName: document.getElementById('adm-student').value,
+        parentName: document.getElementById('adm-parent').value,
+        phone: document.getElementById('adm-phone').value,
+        grade: document.getElementById('adm-grade').value
+      };
+
+      // Save to localStorage
+      const savedAdmission = storage.saveAdmission(admissionData);
+
+      if (admRefText) admRefText.textContent = `Ref ID: ${savedAdmission.refId}`;
       admissionAppForm.style.display = 'none';
-      if (admissionSuccessBox) admissionSuccessBox.style.display = 'block';
+      if (admissionSuccessBox) {
+        admissionSuccessBox.style.display = 'block';
+        admissionSuccessBox.innerHTML = `
+          <h4>✓ Application Registered!</h4>
+          <p id="adm-ref-text">Ref ID: ${savedAdmission.refId}</p>
+          <p>Our admissions desk will contact you via WhatsApp/Phone within 24 hours to schedule the diagnostic assessment dialogue.</p>
+        `;
+      }
     });
   }
+
+  // ================= DISPLAY STORAGE STATS IN CONSOLE =================
+  console.log('%c📊 Muhammad Education Institute - Storage Stats', 'font-size: 16px; font-weight: bold; color: #2b4a8f;');
+  console.log('Total Messages:', storage.getMessageStats());
+  console.log('Total Admissions:', storage.getAdmissionStats());
+  console.log('View Dashboard: view-admissions.html');
 
 });
