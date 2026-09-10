@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Messages & Admissions - Muhammad Education Institute</title>
+    <link rel="icon" href="../logo2.png" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../components.css">
+    <link rel="stylesheet" href="../responsive-components.css">
+    <link rel="stylesheet" href="../dashboard.css">
+
+    <style>
+        /* ============================================
+           VIEW-ADMISSIONS - Blue Themed (matches login-credentials.css)
+           Fully Responsive | Full Width Layout
+           ============================================ */
+
+        /* ===== RESET & GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: #f1f5f9;
+            color: #0f172a;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== APP CONTAINER - FULL WIDTH ===== */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* ===== MAIN PANEL - FULL WIDTH ===== */
+        .main-panel {
+            flex: 1;
+            padding: 24px 32px;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            transition: all 0.3s;
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            background: white;
+            padding: 50px 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e9eef3;
+            width: 100%;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-header h1 i {
+            color: #2563eb;
+            background: none;
+            -webkit-text-fill-color: #2563eb;
+        }
+
+        .page-header p {
+            color: #475569;
+            margin-top: 8px;
+            font-size: 15px;
+            border-left: 3px solid #3b82f6;
+            padding-left: 16px;
+        }
+
+        /* ===== TABS CONTAINER ===== */
+        .tabs-container {
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: white;
+            border: 1px solid #e9eef3;
+            padding: 8px 16px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .tab-btn i {
+            font-size: 16px;
+            color: #94a3b8;
+        }
+
+        .tab-btn.active {
+            background: #eef2ff;
+            color: #1e40af;
+            border-bottom: 3px solid #2563eb;
+        }
+
+        .tab-btn.active i { color: #2563eb; }
+
+        .tab-btn:hover:not(.active) {
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .tab-btn:hover:not(.active) i { color: #64748b; }
+
+        /* ===== SECTION ===== */
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* ===== DATA CARD ===== */
+        .data-card {
+            background: white;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #edf2f7;
+            overflow: hidden;
+            display: none;
+            width: 100%;
+        }
+
+        .data-card.active-tab { display: block; }
+
+        .card-header {
+            padding: 20px 28px;
+            background: #fefefe;
+            border-bottom: 1px solid #eef2f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-header h2 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-header h2 i { color: #2563eb; }
+
+        .badge-count {
+            background: #eef2ff;
+            padding: 4px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.15);
+            border: 1px solid #1d4ed8;
+        }
+
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 16px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 0;
+            font-size: 14px;
+            background: white;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== BUTTONS (blue theme) ===== */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn:hover { transform: translateY(-1px); }
+
+        .btn-view,
+        .btn-reply {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-view:hover,
+        .btn-reply:hover { background: #1d4ed8; }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-delete:hover { background: #dc2626; }
+
+        .btn-export {
+            background: #10b981;
+            color: white;
+        }
+        .btn-export:hover { background: #059669; }
+
+        .btn-clear-all {
+            background: #f59e0b;
+            color: white;
+        }
+        .btn-clear-all:hover { background: #d97706; }
+
+        /* ===== GRIDS ===== */
+        .messages-grid,
+        .admissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        /* ===== MESSAGE CARD ===== */
+        .message-card {
+            background: white;
+            border: 1px solid #e9eef3;
+            border-top: 4px solid #2563eb;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s;
+            position: relative;
+        }
+
+        .message-card:hover {
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+            transform: translateY(-3px);
+            border-top-color: #1e40af;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            gap: 10px;
+        }
+
+        .message-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #1e3a8a;
+        }
+
+        .message-date {
+            font-size: 0.72rem;
+            color: #1e40af;
+            background: #eef2ff;
+            padding: 4px 10px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .message-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-size: 0.85rem;
+        }
+
+        .info-item {
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #2563eb;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #1e40af;
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .info-value {
+            color: #0f172a;
+            word-break: break-word;
+        }
+
+        .message-text {
+            background: #f8fafc;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            color: #475569;
+            line-height: 1.5;
+            min-height: 60px;
+            border-left: 3px solid #2563eb;
+            font-size: 0.9rem;
+        }
+
+        .message-actions,
+        .admission-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #eef2f8;
+            flex-wrap: wrap;
+        }
+
+        /* ===== ADMISSION CARD ===== */
+        .admission-card {
+            background: white;
+            border: 1px solid #e9eef3;
+            padding: 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admission-card:hover {
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.15);
+            border-color: #2563eb;
+            transform: translateY(-3px);
+        }
+
+        .admission-header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 16px 20px;
+            margin: 0 -20px 16px;
+        }
+
+        .admission-refid {
+            font-size: 0.78rem;
+            opacity: 0.9;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .admission-student {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #1e40af;
+            padding: 5px 14px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 14px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .admission-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-size: 0.85rem;
+        }
+
+        .meta-item {
+            padding: 10px 12px;
+            background: #f8fafc;
+            border-left: 3px solid #2563eb;
+        }
+
+        .meta-label {
+            font-weight: 700;
+            color: #1e40af;
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .meta-value {
+            color: #0f172a;
+            word-break: break-word;
+        }
+
+        .admission-dates {
+            font-size: 0.78rem;
+            color: #64748b;
+            padding-top: 12px;
+            border-top: 1px solid #eef2f8;
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 24px;
+            background: white;
+            border: 1px solid #e9eef3;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            color: #475569;
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           MODAL (blue themed)
+           ============================================ */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 500px;
+            max-width: 92%;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            border-bottom: 1px solid #1d4ed8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 34px;
+            height: 34px;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detail-row {
+            padding: 12px 14px;
+            background: #f8fafc;
+            border-left: 3px solid #2563eb;
+        }
+
+        .detail-label {
+            font-weight: 700;
+            color: #1e40af;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            display: block;
+            letter-spacing: 0.3px;
+        }
+
+        .detail-value {
+            color: #0f172a;
+            word-break: break-word;
+            font-size: 0.92rem;
+        }
+
+        .detail-value a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .detail-value a:hover { text-decoration: underline; }
+
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .main-panel { padding: 20px 16px; }
+            .page-header { padding: 40px 24px; }
+            .page-header h1 { font-size: 24px; }
+            .page-header p { font-size: 14px; }
+            .tabs { padding: 6px 12px; }
+            .tab-btn { padding: 10px 20px; font-size: 14px; }
+            .card-header { padding: 16px 20px; }
+            .card-header h2 { font-size: 17px; }
+            .stat-number { font-size: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .main-panel { padding: 16px 12px; }
+            .page-header { padding: 16px 18px; }
+            .page-header h1 { font-size: 20px; gap: 10px; }
+            .page-header p { font-size: 13px; padding-left: 10px; margin-top: 4px; }
+
+            .tabs {
+                flex-direction: column;
+                gap: 4px;
+                padding: 6px 10px;
+            }
+
+            .tab-btn {
+                justify-content: center;
+                padding: 12px 16px;
+                font-size: 14px;
+                width: 100%;
+            }
+
+            .card-header {
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card-header h2 { font-size: 15px; }
+            .badge-count { font-size: 12px; padding: 2px 10px; }
+
+            .messages-grid,
+            .admissions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message-info,
+            .admission-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .controls { flex-direction: column; }
+            .search-box { width: 100%; min-width: auto; }
+            .control-buttons { width: 100%; }
+            .control-buttons .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .stat-number { font-size: 1.7rem; }
+            .stat-label { font-size: 0.75rem; }
+
+            .modal-content { width: 95%; max-width: 95%; }
+            .modal-header { padding: 16px 20px; }
+            .modal-header h3 { font-size: 16px; }
+            .modal-body { padding: 18px; }
+        }
+
+        @media (max-width: 480px) {
+            .main-panel { padding: 12px 8px; }
+            .page-header { padding: 60px 14px; }
+            .page-header h1 { font-size: 17px; }
+            .page-header p { font-size: 12px; padding-left: 8px; }
+
+            .tab-btn { padding: 10px 12px; font-size: 13px; }
+
+            .card-header { padding: 12px 14px; }
+            .card-header h2 { font-size: 14px; }
+
+            .stat-number { font-size: 1.5rem; }
+
+            .message-card,
+            .admission-card { padding-left: 16px; padding-right: 16px; }
+            .admission-header { margin: 0 -16px 14px; padding: 14px 16px; }
+
+            .btn { padding: 8px 14px; font-size: 12px; }
+
+            .modal-header { padding: 14px 16px; }
+            .modal-header h3 { font-size: 15px; }
+            .modal-body { padding: 16px; }
+            .detail-row { padding: 10px 12px; }
+        }
+
+        @media (max-width: 360px) {
+            .main-panel { padding: 8px 4px; }
+            .page-header { padding: 60px 12px; }
+            .page-header h1 { font-size: 15px; }
+            .page-header p { font-size: 11px; }
+
+            .tab-btn { padding: 8px 10px; font-size: 12px; }
+
+            .stat-number { font-size: 1.3rem; }
+
+            .btn { padding: 6px 12px; font-size: 11px; }
+        }
+
+        /* ============================================
+           PRINT STYLES
+           ============================================ */
+        @media print {
+            .tabs-container,
+            .controls,
+            .message-actions,
+            .admission-actions,
+            .modal { display: none !important; }
+
+            .message-card,
+            .admission-card,
+            .data-card,
+            .page-header { box-shadow: none; border: 1px solid #ddd; }
+
+            .admission-header,
+            .stat-card,
+            .modal-header {
+                background: #2563eb !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header will be loaded here -->
+    <div id="header-placeholder"></div>
+
+    <div class="app-container" id="appWrapper">
+
+        <!-- Sidebar will be loaded here -->
+        <div id="sidebar-placeholder"></div>
+
+        <!-- Main Content -->
+        <main class="main-panel">
+
+            <!-- ========== PAGE HEADER ========== -->
+            <div class="page-header">
+                <h1><i class="fas fa-inbox"></i> View Messages & Admissions</h1>
+                <p>Review inquiries and admission applications from the public website</p>
+            </div>
+
+            <!-- ========== TABS ========== -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="messages">
+                        <i class="fas fa-envelope"></i> Messages
+                    </button>
+                    <button class="tab-btn" data-tab="admissions">
+                        <i class="fas fa-graduation-cap"></i> Admissions
+                    </button>
+                </div>
+            </div>
+
+            <!-- ========== MESSAGES SECTION ========== -->
+            <section id="messages" class="section active">
+
+                <div class="stats-bar">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-messages">0</div>
+                        <div class="stat-label">Total Messages</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="today-messages">0</div>
+                        <div class="stat-label">Today's Messages</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pending-messages">0</div>
+                        <div class="stat-label">Pending Reply</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <input type="text" class="search-box" id="message-search" placeholder="🔍 Search by name, email, or subject...">
+                    <div class="control-buttons">
+                        <button class="btn btn-export" onclick="exportMessages()">📥 Export CSV</button>
+                        <button class="btn btn-clear-all" onclick="clearAllMessages()">🗑️ Clear All</button>
+                    </div>
+                </div>
+
+                <div id="messages-container" class="messages-grid"></div>
+
+                <div id="messages-empty" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📭</div>
+                    <h3 class="empty-title">No Messages Yet</h3>
+                    <p class="empty-text">Messages from the contact form will appear here. Submissions are automatically saved to your browser's local storage.</p>
+                </div>
+            </section>
+
+            <!-- ========== ADMISSIONS SECTION ========== -->
+            <section id="admissions" class="section">
+
+                <div class="stats-bar">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-applications">0</div>
+                        <div class="stat-label">Total Applications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="today-applications">0</div>
+                        <div class="stat-label">Today's Applications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pending-assessment">0</div>
+                        <div class="stat-label">Pending Assessment</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <input type="text" class="search-box" id="admission-search" placeholder="🔍 Search by student name, parent, or phone...">
+                    <div class="control-buttons">
+                        <button class="btn btn-export" onclick="exportAdmissions()">📥 Export CSV</button>
+                        <button class="btn btn-clear-all" onclick="clearAllAdmissions()">🗑️ Clear All</button>
+                    </div>
+                </div>
+
+                <div id="admissions-container" class="admissions-grid"></div>
+
+                <div id="admissions-empty" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📋</div>
+                    <h3 class="empty-title">No Applications Yet</h3>
+                    <p class="empty-text">Admission applications will appear here. Submissions are automatically saved to your browser's local storage.</p>
+                </div>
+            </section>
+
+            <!-- ========== DETAIL MODAL ========== -->
+            <div id="detailModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">Details</h3>
+                        <button class="close-btn" onclick="closeModal()">&times;</button>
+                    </div>
+                    <div id="modal-body" class="modal-body"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script src="../components.js"></script>
+
+    <script>
+        // ===== Load Header and Sidebar =====
+        function loadComponents() {
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => { document.getElementById('header-placeholder').innerHTML = data; })
+                .catch(err => console.error('Error loading header:', err));
+
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => { document.getElementById('sidebar-placeholder').innerHTML = data; })
+                .catch(err => console.error('Error loading sidebar:', err));
+        }
+
+        window.addEventListener('load', function() {
+            loadComponents();
+            setTimeout(() => {
+                if (typeof window.initHeaderAndSidebar === 'function') {
+                    window.initHeaderAndSidebar();
+                }
+                setTimeout(() => {
+                    renderMessages();
+                    renderAdmissions();
+                }, 100);
+            }, 400);
+        });
+    </script>
+
+    <script>
+        // ========== LOCAL STORAGE ==========
+        class DataManager {
+            constructor() {
+                this.messagesKey = 'MEI_CONTACT_MESSAGES';
+                this.admissionsKey = 'MEI_ADMISSION_APPLICATIONS';
+            }
+
+            saveMessage(message) {
+                const messages = this.getMessages();
+                message.id = Date.now();
+                message.timestamp = new Date().toISOString();
+                message.replied = false;
+                messages.push(message);
+                localStorage.setItem(this.messagesKey, JSON.stringify(messages));
+                return message;
+            }
+
+            getMessages() {
+                const data = localStorage.getItem(this.messagesKey);
+                return data ? JSON.parse(data) : [];
+            }
+
+            deleteMessage(id) {
+                const messages = this.getMessages();
+                localStorage.setItem(this.messagesKey, JSON.stringify(messages.filter(m => m.id !== id)));
+            }
+
+            clearAllMessages() { localStorage.removeItem(this.messagesKey); }
+
+            saveAdmission(admission) {
+                const admissions = this.getAdmissions();
+                admission.id = Date.now();
+                admission.refId = 'MEI-ADM-' + Math.floor(10000 + Math.random() * 90000);
+                admission.timestamp = new Date().toISOString();
+                admission.status = 'pending';
+                admissions.push(admission);
+                localStorage.setItem(this.admissionsKey, JSON.stringify(admissions));
+                return admission;
+            }
+
+            getAdmissions() {
+                const data = localStorage.getItem(this.admissionsKey);
+                return data ? JSON.parse(data) : [];
+            }
+
+            deleteAdmission(id) {
+                const admissions = this.getAdmissions();
+                localStorage.setItem(this.admissionsKey, JSON.stringify(admissions.filter(a => a.id !== id)));
+            }
+
+            clearAllAdmissions() { localStorage.removeItem(this.admissionsKey); }
+        }
+
+        const manager = new DataManager();
+
+        // ========== HELPERS ==========
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatDateShort(isoString) {
+            return new Date(isoString).toLocaleDateString();
+        }
+
+        function isToday(isoString) {
+            const date = new Date(isoString);
+            const today = new Date();
+            return date.toLocaleDateString() === today.toLocaleDateString();
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return String(text).replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // ========== MESSAGES ==========
+        function renderMessages(filter = '') {
+            const messages = manager.getMessages();
+            const container = document.getElementById('messages-container');
+            const empty = document.getElementById('messages-empty');
+
+            let filtered = messages;
+            if (filter) {
+                const f = filter.toLowerCase();
+                filtered = messages.filter(m =>
+                    m.name.toLowerCase().includes(f) ||
+                    m.email.toLowerCase().includes(f) ||
+                    m.subject.toLowerCase().includes(f)
+                );
+            }
+
+            document.getElementById('total-messages').textContent = messages.length;
+            document.getElementById('today-messages').textContent = messages.filter(m => isToday(m.timestamp)).length;
+            document.getElementById('pending-messages').textContent = messages.filter(m => !m.replied).length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            container.innerHTML = filtered.slice().reverse().map(msg => `
+                <div class="message-card">
+                    <div class="message-header">
+                        <div class="message-name">📧 ${escapeHtml(msg.name)}</div>
+                        <div class="message-date">${formatDateShort(msg.timestamp)}</div>
+                    </div>
+                    <div class="message-info">
+                        <div class="info-item">
+                            <span class="info-label">Email</span>
+                            <div class="info-value">${escapeHtml(msg.email)}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Phone</span>
+                            <div class="info-value">${escapeHtml(msg.phone)}</div>
+                        </div>
+                        <div class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Subject</span>
+                            <div class="info-value">${escapeHtml(msg.subject)}</div>
+                        </div>
+                    </div>
+                    <div class="message-text">${escapeHtml(msg.message)}</div>
+                    <div class="message-actions">
+                        <button class="btn btn-reply" onclick="viewMessageDetails(${msg.id})">👁️ View</button>
+                        <button class="btn btn-delete" onclick="deleteMessageConfirm(${msg.id})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== ADMISSIONS ==========
+        function renderAdmissions(filter = '') {
+            const admissions = manager.getAdmissions();
+            const container = document.getElementById('admissions-container');
+            const empty = document.getElementById('admissions-empty');
+
+            let filtered = admissions;
+            if (filter) {
+                const f = filter.toLowerCase();
+                filtered = admissions.filter(a =>
+                    a.studentName.toLowerCase().includes(f) ||
+                    a.parentName.toLowerCase().includes(f) ||
+                    a.phone.toLowerCase().includes(f) ||
+                    a.refId.includes(filter)
+                );
+            }
+
+            document.getElementById('total-applications').textContent = admissions.length;
+            document.getElementById('today-applications').textContent = admissions.filter(a => isToday(a.timestamp)).length;
+            document.getElementById('pending-assessment').textContent = admissions.filter(a => a.status === 'pending').length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            container.innerHTML = filtered.slice().reverse().map(adm => `
+                <div class="admission-card">
+                    <div class="admission-header">
+                        <div class="admission-refid">Ref: ${adm.refId}</div>
+                        <div class="admission-student">${escapeHtml(adm.studentName)}</div>
+                    </div>
+                    <div class="grade-badge">📚 ${escapeHtml(adm.grade)}</div>
+                    <div class="admission-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Parent / Guardian</span>
+                            <div class="meta-value">${escapeHtml(adm.parentName)}</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Contact</span>
+                            <div class="meta-value">${escapeHtml(adm.phone)}</div>
+                        </div>
+                    </div>
+                    <div class="admission-dates">
+                        <span>📅 ${formatDateShort(adm.timestamp)}</span>
+                        <span style="background: ${adm.status === 'pending' ? '#fef08a' : '#d1fae5'}; padding: 4px 12px; font-weight: 700; font-size: 0.72rem; color: ${adm.status === 'pending' ? '#b45309' : '#065f46'};">
+                            ${adm.status === 'pending' ? '⏳ PENDING' : '✅ CONTACTED'}
+                        </span>
+                    </div>
+                    <div class="admission-actions">
+                        <button class="btn btn-view" onclick="viewAdmissionDetails(${adm.id})">👁️ View</button>
+                        <button class="btn btn-delete" onclick="deleteAdmissionConfirm(${adm.id})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== MODAL ==========
+        function viewMessageDetails(id) {
+            const msg = manager.getMessages().find(m => m.id === id);
+            if (!msg) return;
+
+            document.getElementById('modal-title').textContent = '💌 Message Details';
+            document.getElementById('modal-body').innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Name</span>
+                    <div class="detail-value">${escapeHtml(msg.name)}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email</span>
+                    <div class="detail-value"><a href="mailto:${escapeHtml(msg.email)}">${escapeHtml(msg.email)}</a></div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone</span>
+                    <div class="detail-value"><a href="tel:${escapeHtml(msg.phone)}">${escapeHtml(msg.phone)}</a></div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Subject</span>
+                    <div class="detail-value">${escapeHtml(msg.subject)}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Message</span>
+                    <div class="detail-value" style="line-height: 1.6;">${escapeHtml(msg.message)}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Received On</span>
+                    <div class="detail-value">${formatDate(msg.timestamp)}</div>
+                </div>
+            `;
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function viewAdmissionDetails(id) {
+            const adm = manager.getAdmissions().find(a => a.id === id);
+            if (!adm) return;
+
+            document.getElementById('modal-title').textContent = '🎓 Application Details';
+            document.getElementById('modal-body').innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Reference ID</span>
+                    <div class="detail-value" style="font-weight: 700; color: #1e40af;">${adm.refId}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Student Name</span>
+                    <div class="detail-value">${escapeHtml(adm.studentName)}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Parent / Guardian</span>
+                    <div class="detail-value">${escapeHtml(adm.parentName)}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Contact Number</span>
+                    <div class="detail-value"><a href="tel:${escapeHtml(adm.phone)}">${escapeHtml(adm.phone)}</a></div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Applying Grade</span>
+                    <div class="detail-value">${escapeHtml(adm.grade)}</div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Application Status</span>
+                    <div class="detail-value"><strong>${adm.status === 'pending' ? '⏳ Pending Assessment' : '✅ Contacted'}</strong></div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Submitted On</span>
+                    <div class="detail-value">${formatDate(adm.timestamp)}</div>
+                </div>
+            `;
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('show');
+        }
+
+        window.onclick = function (e) {
+            const modal = document.getElementById('detailModal');
+            if (e.target === modal) closeModal();
+        };
+
+        // ========== DELETE ==========
+        function deleteMessageConfirm(id) {
+            if (confirm('Are you sure you want to delete this message?')) {
+                manager.deleteMessage(id);
+                renderMessages();
+            }
+        }
+
+        function deleteAdmissionConfirm(id) {
+            if (confirm('Are you sure you want to delete this application?')) {
+                manager.deleteAdmission(id);
+                renderAdmissions();
+            }
+        }
+
+        function clearAllMessages() {
+            if (confirm('Are you sure? This will delete ALL messages permanently.')) {
+                manager.clearAllMessages();
+                renderMessages();
+            }
+        }
+
+        function clearAllAdmissions() {
+            if (confirm('Are you sure? This will delete ALL applications permanently.')) {
+                manager.clearAllAdmissions();
+                renderAdmissions();
+            }
+        }
+
+        // ========== EXPORT ==========
+        function exportMessages() {
+            const messages = manager.getMessages();
+            if (messages.length === 0) { alert('No messages to export.'); return; }
+
+            let csv = 'Name,Email,Phone,Subject,Message,Date\n';
+            messages.forEach(msg => {
+                csv += `"${msg.name}","${msg.email}","${msg.phone}","${msg.subject}","${msg.message.replace(/"/g, '""')}","${formatDate(msg.timestamp)}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `MEI_Messages_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function exportAdmissions() {
+            const admissions = manager.getAdmissions();
+            if (admissions.length === 0) { alert('No applications to export.'); return; }
+
+            let csv = 'Ref ID,Student Name,Parent,Phone,Grade,Status,Date\n';
+            admissions.forEach(adm => {
+                csv += `"${adm.refId}","${adm.studentName}","${adm.parentName}","${adm.phone}","${adm.grade}","${adm.status}","${formatDate(adm.timestamp)}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `MEI_Admissions_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // ========== SEARCH ==========
+        document.getElementById('message-search').addEventListener('input', (e) => {
+            renderMessages(e.target.value);
+        });
+
+        document.getElementById('admission-search').addEventListener('input', (e) => {
+            renderAdmissions(e.target.value);
+        });
+
+        // ========== TABS ==========
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(tab).classList.add('active');
+            });
+        });
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMessages();
+            renderAdmissions();
+        });
+    </script>
+</body>
+</html>
